@@ -1,0 +1,11 @@
+#vendor
+.env
+.idea
+app.yaml
+log.txt
+*_test.go
+postit_backend_api.exe
+/pkg/logs/*.log
+/pkg/temp_files/*.jpeg
+/pkg/temp_files/*.jpg
+/pkg/temp_files/*.png

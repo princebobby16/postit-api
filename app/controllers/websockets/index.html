@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test WebSocket</title>
+</head>
+<body>
+<h2>Schedule Status</h2>
+<h1 id="stat"></h1>
+<h2 id="count"></h2>
+<script>
+    let status = {};
+    let userdata = {};
+    let data;
+    const websocket = new WebSocket("ws://localhost:5379/pws/schedule-status");
+
+    websocket.onopen = function (event) {
+        console.log("Successfully connected to endpoint");
+        userdata = {
+            "tenant_namespace": "postit",
+            "auth_token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMjkxNGY0MC1hYzdiLTRjNjAtYTNhZi1jMWUxY2JhODhmYTciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjA4MzExNDk5LCJpYXQiOjE2MDgzMTAyOTl9.XDnfvK1nzBjx8Zv3dr8HLUIpSA5EAwa--2W4PKgt_U0UA1dJt_IkaQsQhCmzUnUil8kU4_Z43-yuA_N8C9qOgg"
+        };
+        data = JSON.stringify(userdata);
+        console.log(data);
+
+        websocket.send(data);
+    }
+
+    websocket.onerror = function (err) {
+        console.log(err);
+    }
+
+    websocket.onmessage = function (event) {
+        status = JSON.parse(event.data);
+        console.log(status);
+
+        if (status == null) {
+            document.getElementById("stat").innerText = "no schedule in progress";
+            document.getElementById("count").innerText = "";
+        } else {
+            document.getElementById("stat").innerText = status[0].schedule_title;
+            document.getElementById("count").innerText = (status[0].post_count/ status[0].post_ids.length) *100;
+        }
+    }
+
+</script>
+</body>
+</html>
