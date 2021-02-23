@@ -10,7 +10,7 @@ build:
 #  start_in:
   image: golang:latest
   script:
-    - go list ./... | grep -v /vendor/
+    - go mod init
     - go build -o bin/postit-api -v
 
 test:
