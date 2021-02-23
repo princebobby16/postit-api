@@ -7,10 +7,10 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/lib/pq"
 	"net/http"
-	"postit-backend-api/app/middlewares"
-	"postit-backend-api/db"
-	"postit-backend-api/pkg"
-	"postit-backend-api/pkg/logs"
+	"postit-api/app/middlewares"
+	"postit-api/db"
+	"postit-api/pkg"
+	"postit-api/pkg/logs"
 	"time"
 )
 

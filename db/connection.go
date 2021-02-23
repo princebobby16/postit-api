@@ -5,7 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"os"
-	"postit-backend-api/pkg/logs"
+	"postit-api/pkg/logs"
 )
 
 var Connection *sql.DB

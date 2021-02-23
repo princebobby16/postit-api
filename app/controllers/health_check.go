@@ -3,7 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"postit-backend-api/pkg/logs"
+	"postit-api/pkg/logs"
 )
 
 type HealthCheck struct {

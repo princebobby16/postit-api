@@ -3,12 +3,12 @@ package router
 import (
 	"github.com/gorilla/mux"
 	"net/http"
-	"postit-backend-api/app/controllers"
-	"postit-backend-api/app/controllers/emojiList"
-	"postit-backend-api/app/controllers/mediaupload"
-	"postit-backend-api/app/controllers/posts"
-	"postit-backend-api/app/controllers/social"
-	"postit-backend-api/app/controllers/websockets"
+	"postit-api/app/controllers"
+	"postit-api/app/controllers/emojiList"
+	"postit-api/app/controllers/mediaupload"
+	"postit-api/app/controllers/posts"
+	"postit-api/app/controllers/social"
+	"postit-api/app/controllers/websockets"
 )
 
 //Route Create a single route object

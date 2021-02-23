@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"postit-backend-api/app/middlewares"
-	"postit-backend-api/app/router"
-	"postit-backend-api/db"
-	"postit-backend-api/pkg/logs"
+	"postit-api/app/middlewares"
+	"postit-api/app/router"
+	"postit-api/db"
+	"postit-api/pkg/logs"
 	"time"
 )
 

@@ -5,8 +5,8 @@ import (
 	"github.com/twinj/uuid"
 	"io/ioutil"
 	"net/http"
-	"postit-backend-api/pkg"
-	"postit-backend-api/pkg/logs"
+	"postit-api/pkg"
+	"postit-api/pkg/logs"
 	"time"
 )
 

@@ -8,9 +8,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"postit-backend-api/db"
-	"postit-backend-api/pkg"
-	"postit-backend-api/pkg/logs"
+	"postit-api/db"
+	"postit-api/pkg"
+	"postit-api/pkg/logs"
 	"time"
 )
 

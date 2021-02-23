@@ -10,8 +10,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"postit-backend-api/pkg"
-	"postit-backend-api/pkg/logs"
+	"postit-api/pkg"
+	"postit-api/pkg/logs"
 	"strings"
 	"time"
 )

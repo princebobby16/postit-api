@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"postit-backend-api/pkg/logs"
+	"postit-api/pkg/logs"
 	"strings"
 	"time"
 )
