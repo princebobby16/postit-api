@@ -1,0 +1,33 @@
+stages:
+  - compile
+  - test
+  - deploy
+
+build:
+  stage: compile
+#  extends:
+#  when: delayed
+#  start_in:
+  image: golang:latest
+  script:
+    - go get -d -v
+    - go build -o bin/postit-api -v
+
+test:
+  stage: test
+  image: golang:latest
+  script:
+    - go test tests/*.go
+
+staging:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-api --api-key=$HEROKU_API_KEY
+  environment:
+    name: development
+    url: https://postit-staging-api.herokuapp.com/
+  only:
+    - ci-cd
