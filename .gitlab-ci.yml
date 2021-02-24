@@ -17,7 +17,7 @@ build:
   #  start_in:
   image: golang:latest
   script:
-    - godep save
+    - go mod init
     - go build -o bin/postit-api -v
 
 
