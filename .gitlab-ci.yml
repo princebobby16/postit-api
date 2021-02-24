@@ -12,6 +12,7 @@ variables:
 # repository in /go/src/gitlab.com/pbobby001/postit-api
 # Thus, making a symbolic link corrects this.
 before_script:
+  - go mod init
   - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
   - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
   - cd $GOPATH/src/$REPO_NAME
