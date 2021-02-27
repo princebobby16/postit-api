@@ -199,17 +199,12 @@ func WebSocketTokenValidateToken(tokenString string, PrivateKey []byte, tenantNa
 	logs.Logger.Info(tokenString)
 	logs.Logger.Info(tenantNamespace)
 
-	verifier, err := jwt.NewVerifierHS(jwt.HS512, PrivateKey)
+	jwtToken, err := jwt.Parse([]byte(tokenString))
 	if err != nil {
 		return err
 	}
 
-	jwtToken, err := jwt.ParseString(tokenString, verifier)
-	if err != nil {
-		return err
-	}
-
-	var jwtClaims jwt.RegisteredClaims
+	var jwtClaims *jwt.StandardClaims
 	claims := jwtToken.RawClaims()
 	err = json.Unmarshal(claims, &jwtClaims)
 	if err != nil {
@@ -217,7 +212,7 @@ func WebSocketTokenValidateToken(tokenString string, PrivateKey []byte, tenantNa
 	}
 
 	//var newToken string
-	if jwtClaims.ExpiresAt.Before(time.Now()) {
+	if jwtClaims.ExpiresAt.Time().Before(time.Now()) {
 		logs.Logger.Info("Token expired! getting a new one....")
 
 		client := &http.Client{}
@@ -235,11 +230,15 @@ func WebSocketTokenValidateToken(tokenString string, PrivateKey []byte, tenantNa
 		logs.Logger.Info("refresh-token: ", resp.Header.Get("refresh-token"))
 	}
 
+	validator := jwt.NewValidator(
+		jwt.AudienceChecker([]string{"postit-audience", tenantNamespace}),
+	)
+
 	if jwtClaims.Audience[0] != tenantNamespace {
 		return errors.New("invalid tenant namespace")
 	}
 
-	err = verifier.Verify(jwtToken.Payload(), jwtToken.Signature())
+	err = validator.Validate(jwtClaims)
 	if err != nil {
 		return err
 	}

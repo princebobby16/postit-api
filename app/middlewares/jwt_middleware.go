@@ -47,7 +47,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 
 			logs.Logger.Info(tokenString)
 
-			verifier, err := jwt.NewVerifierHS(jwt.HS512, PrivateKey)
+			jwtToken, err := jwt.Parse([]byte(tokenString))
 			if err != nil {
 				logs.Logger.Info(err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -55,27 +55,18 @@ func JWTMiddleware(next http.Handler) http.Handler {
 				return
 			}
 
-			jwtToken, err := jwt.ParseString(tokenString, verifier)
-			if err != nil {
-				logs.Logger.Info(err)
-				logs.Logger.Info("Unable to parse token! Token Malformed")
-				w.WriteHeader(http.StatusUnauthorized)
-				_, _ = w.Write([]byte("Token\rMalformed"))
-				return
-			}
-
-			var jwtClaims jwt.RegisteredClaims
+			var jwtClaims *jwt.StandardClaims
 			claims := jwtToken.RawClaims()
 			err = json.Unmarshal(claims, &jwtClaims)
 			if err != nil {
 				logs.Logger.Info(err)
 				w.WriteHeader(http.StatusInternalServerError)
-				_, _ = w.Write([]byte("Something went wrong! Contact admin!"))
+				_, _ = w.Write([]byte("Something went wrong! Contact Admin!"))
 				return
 			}
 
 			//var newToken string
-			if jwtClaims.ExpiresAt.Before(time.Now()) {
+			if jwtClaims.ExpiresAt.Time().Before(time.Now()) {
 				logs.Logger.Info("Token expired! getting a new one....")
 
 				client := &http.Client{}
@@ -97,19 +88,23 @@ func JWTMiddleware(next http.Handler) http.Handler {
 				logs.Logger.Info("refresh-token: ", resp.Header.Get("refresh-token"))
 			}
 
-			if jwtClaims.Audience[0] != r.Header.Get("tenant-namespace") {
-				logs.Logger.Info("Jwt Claim Audience", jwtClaims.Audience[0])
+			if jwtClaims.Audience[1] != r.Header.Get("tenant-namespace") && jwtClaims.Audience[0] != "postit-audience" {
+				logs.Logger.Info("Jwt Claim Audience", jwtClaims.Audience[0], jwtClaims.Audience[1])
 				logs.Logger.Info("Invalid tenant-namespace")
 				w.WriteHeader(http.StatusUnauthorized)
 				_, _ = w.Write([]byte("Wrong org namespace header"))
 				return
 			}
 
-			err = verifier.Verify(jwtToken.Payload(), jwtToken.Signature())
+			validator := jwt.NewValidator(
+				jwt.AudienceChecker([]string{"postit-audience", r.Header.Get("tenant-namespace")}),
+			)
+
+			err = validator.Validate(jwtClaims)
 			if err != nil {
 				logs.Logger.Info(err)
 				w.WriteHeader(http.StatusUnauthorized)
-				w.Write([]byte("Invalid Token Signature"))
+				_, _ = w.Write([]byte("contact admin"))
 				return
 			}
 
