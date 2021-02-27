@@ -1,1 +1,1 @@
-web: postit-backend-api
+web: postit-api

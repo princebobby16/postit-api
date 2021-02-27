@@ -31,12 +31,48 @@ testing:
 building:
   stage: build
   script:
-    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/postit_api
+    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/postit-api
   artifacts:
     paths:
-      - postit_api
+      - postit-api
 
 deployment:
   stage: deploy
   script:
-    - go fmt
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-dev-api --api-key=$HEROKU_API_KEY
+    environment:
+      name: Development
+      url: https://postit-dev-api.herokuapp.com/
+    only:
+      - master
+
+staging:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-staging-api --api-key=$HEROKU_API_KEY
+    environment:
+      name: Staging
+      url: https://postit-staging-api.herokuapp.com/
+    only:
+      - master
+    when: manual
+
+production:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-api --api-key=$HEROKU_API_KEY
+    environment:
+      name: Production
+      url: https://postit-api.herokuapp.com/
+    only:
+      - master
+    when: manual
