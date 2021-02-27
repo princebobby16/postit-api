@@ -18,7 +18,7 @@ before_script:
 
 stages:
   - test
-  - build
+#  - vet
   - deploy
 
 testing:
@@ -28,13 +28,13 @@ testing:
     - go vet $(go list ./... | grep -v /vendor/)
     - go test -race $(go list ./... | grep -v /vendor/)
 
-building:
-  stage: build
-  script:
-    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/postit-api
-  artifacts:
-    paths:
-      - postit-api
+#building:
+#  stage: build
+#  script:
+#    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/postit-api
+#  artifacts:
+#    paths:
+#      - postit-api
 
 staging:
   stage: deploy
