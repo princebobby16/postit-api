@@ -56,6 +56,8 @@ production:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
+    - go mod download
+    - go get -u github.com/micro/go-micro
     - dpl --provider=heroku --app=postit-api --api-key=$HEROKU_API_KEY
   environment:
     name: Production
