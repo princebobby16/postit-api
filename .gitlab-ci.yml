@@ -8,18 +8,14 @@ test:
   stage: test
   image: golang:latest
   script:
-    - go test tests/*.go
+    - go test tests/helper_utils_test.go
 
 build:
   stage: compile
-  #  extends:
-  #  when: delayed
-  #  start_in:
   image: golang:latest
   script:
     - go mod init
     - go build
-
 
 staging:
   stage: deploy
