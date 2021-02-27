@@ -1,8 +1,7 @@
-package tests
+package pkg
 
 import (
 	"github.com/twinj/uuid"
-	"gitlab.com/pbobby001/postit-api/pkg"
 	"net/http"
 	"testing"
 )
@@ -18,7 +17,7 @@ func TestValidateHeaders(t *testing.T) {
 	req.Header.Add("trace-id", traceId)
 	req.Header.Add("tenant-namespace", tenantNamespace)
 
-	headers, err := pkg.ValidateHeaders(req)
+	headers, err := ValidateHeaders(req)
 	if err != nil {
 		t.Fatal(err)
 	}
