@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"postit-api/db"
-	"postit-api/pkg"
-	"postit-api/pkg/logs"
+	"gitlab.com/pbobby001/postit-api/db"
+	"gitlab.com/pbobby001/postit-api/pkg"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"time"
 )
 

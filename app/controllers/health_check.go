@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"net/http"
-	"postit-api/pkg/logs"
 )
 
 type HealthCheck struct {

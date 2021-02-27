@@ -3,10 +3,10 @@ package posts
 import (
 	"encoding/json"
 	"github.com/twinj/uuid"
+	"gitlab.com/pbobby001/postit-api/pkg"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"io/ioutil"
 	"net/http"
-	"postit-api/pkg"
-	"postit-api/pkg/logs"
 	"time"
 )
 

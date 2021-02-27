@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/lib/pq"
+	"gitlab.com/pbobby001/postit-api/app/middlewares"
+	"gitlab.com/pbobby001/postit-api/db"
+	"gitlab.com/pbobby001/postit-api/pkg"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"net/http"
-	"postit-api/app/middlewares"
-	"postit-api/db"
-	"postit-api/pkg"
-	"postit-api/pkg/logs"
 	"time"
 )
 

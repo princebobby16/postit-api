@@ -3,10 +3,10 @@ package middlewares
 import (
 	"encoding/json"
 	"github.com/cristalhq/jwt"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"postit-api/pkg/logs"
 	"strings"
 	"time"
 )

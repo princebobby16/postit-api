@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/twinj/uuid"
+	"gitlab.com/pbobby001/postit-api/db"
+	"gitlab.com/pbobby001/postit-api/pkg"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"postit-api/db"
-	"postit-api/pkg"
-	"postit-api/pkg/logs"
 	"time"
 )
 

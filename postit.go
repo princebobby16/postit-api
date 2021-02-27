@@ -4,14 +4,14 @@ import (
 	"flag"
 	"github.com/gorilla/handlers"
 	_ "github.com/joho/godotenv/autoload"
+	"gitlab.com/pbobby001/postit-api/app/middlewares"
+	"gitlab.com/pbobby001/postit-api/app/router"
+	"gitlab.com/pbobby001/postit-api/db"
+	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"golang.org/x/net/context"
 	"net/http"
 	"os"
 	"os/signal"
-	"postit-api/app/middlewares"
-	"postit-api/app/router"
-	"postit-api/db"
-	"postit-api/pkg/logs"
 	"time"
 )
 
