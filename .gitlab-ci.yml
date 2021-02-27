@@ -18,7 +18,7 @@ build:
   image: golang:latest
   script:
     - go mod init
-    - go build -o bin/postit-api -v
+    - go build
 
 
 staging:
