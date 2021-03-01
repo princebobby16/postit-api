@@ -18,7 +18,6 @@ before_script:
 
 stages:
   - test
-#  - vet
   - deploy
 
 testing:
@@ -28,29 +27,18 @@ testing:
     - go vet $(go list ./... | grep -v /vendor/)
     - go test -race $(go list ./... | grep -v /vendor/)
 
-#building:
-#  stage: build
-#  script:
-#    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/postit-api
-#  artifacts:
-#    paths:
-#      - postit-api
-
 staging:
   stage: deploy
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-#    - go mod download
-#    - go get -u github.com/micro/go-micro
     - dpl --provider=heroku --app=postit-staging-api --api-key=$HEROKU_API_KEY
   environment:
     name: Staging
     url: https://postit-staging-api.herokuapp.com/
   only:
     - master
-#    when: manual
 
 production:
   stage: deploy
@@ -58,8 +46,6 @@ production:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-#    - go mod download
-#    - go get -u github.com/micro/go-micro
     - dpl --provider=heroku --app=postit-api --api-key=$HEROKU_API_KEY
   environment:
     name: Production
