@@ -53,10 +53,10 @@ production:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=postit-api --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=postit-prod-api --api-key=$HEROKU_API_KEY
   environment:
     name: Production
-    url: https://postit-api.herokuapp.com/
+    url: https://postit-prod-api.herokuapp.com/
   only:
     - master
   when: manual
