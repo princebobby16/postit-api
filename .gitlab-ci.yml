@@ -41,19 +41,13 @@ development:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=postit-dev-api --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=postit-dev-api --api-key=$HEROKU_API_KEY --run=heroku run ./bin/goose up
   environment:
     name: Development
     url: https://postit-dev-api.herokuapp.com/
   only:
     - master
 
-migrate-development:
-  stage: migrate
-  script:
-    - heroku run ./bin/goose up
-  only:
-    - master
 
 staging:
   stage: deploy
@@ -61,7 +55,7 @@ staging:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=postit-staging-api --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=postit-staging-api --api-key=$HEROKU_API_KEY --run=heroku run ./bin/goose up
   environment:
     name: Staging
     url: https://postit-staging-api.herokuapp.com/
@@ -69,31 +63,16 @@ staging:
     - master
   when: manual
 
-migrate-staging:
-  stage: migrate
-  script:
-    - heroku run ./bin/goose up
-  only:
-    - master
-
-
 production:
   stage: deploy
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=postit-prod-api --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=postit-prod-api --api-key=$HEROKU_API_KEY --run=heroku run ./bin/goose redo
   environment:
     name: Production
     url: https://postit-prod-api.herokuapp.com/
   only:
     - master
   when: manual
-
-migrate-production:
-  stage: migrate
-  script:
-    - heroku run ./bin/goose up
-  only:
-    - master
