@@ -1,3 +1,5 @@
+// +heroku install .
+
 module gitlab.com/pbobby001/postit-api
 
 go 1.15
