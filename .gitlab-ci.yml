@@ -20,6 +20,7 @@ stages:
   - test
   - build
   - deploy
+  - migrate
 
 testing:
   stage: test
@@ -47,6 +48,13 @@ development:
   only:
     - master
 
+migrate-development:
+  stage: migrate
+  script:
+    - heroku run ./bin/goose up
+  only:
+    - master
+
 staging:
   stage: deploy
   script:
@@ -61,6 +69,14 @@ staging:
     - master
   when: manual
 
+migrate-staging:
+  stage: migrate
+  script:
+    - heroku run ./bin/goose up
+  only:
+    - master
+
+
 production:
   stage: deploy
   script:
@@ -74,3 +90,10 @@ production:
   only:
     - master
   when: manual
+
+migrate-production:
+  stage: migrate
+  script:
+    - heroku run ./bin/goose up
+  only:
+    - master
