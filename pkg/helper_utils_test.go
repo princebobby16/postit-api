@@ -55,7 +55,7 @@ func TestGenerateDurationForEachPost(t *testing.T) {
 
 	d := GenerateDurationForEachPost(s)
 	t.Log("got: ", d)
-	expected := 3.000
+	expected := 3.000000205
 	t.Log("expected: ", expected)
 	if d != expected {
 		t.Fail()
