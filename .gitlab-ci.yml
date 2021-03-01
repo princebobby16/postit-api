@@ -34,6 +34,19 @@ building:
     - go get -d -v
     - go build -o bin/postit-api -v .
 
+development:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-dev-api --api-key=$HEROKU_API_KEY
+  environment:
+    name: Development
+    url: https://postit-dev-api.herokuapp.com/
+  only:
+    - master
+
 staging:
   stage: deploy
   script:
@@ -46,6 +59,7 @@ staging:
     url: https://postit-staging-api.herokuapp.com/
   only:
     - master
+  when: manual
 
 production:
   stage: deploy
