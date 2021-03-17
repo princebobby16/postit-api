@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS postit.post
     post_id uuid UNIQUE NOT NULL,
     facebook_post_id character varying(200),
     post_message text NOT NULL,
-    post_image bytea,
+    post_image bytea[],
     image_extension character varying(200)[],
     hash_tags text[],
     post_status boolean NOT NULL,

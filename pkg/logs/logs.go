@@ -23,6 +23,7 @@ func init() {
 		return
 	}
 	defer file.Close()
+
 	if _, err := os.Stat(critical); !os.IsNotExist(err) {
 		// Do nothing
 	}

@@ -136,11 +136,13 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = os.RemoveAll(path)
-	if err != nil {
-		logs.Logger.Error(err)
-		return
-	}
+	go func() {
+		err = os.RemoveAll(path)
+		if err != nil {
+			logs.Logger.Error(err)
+			return
+		}
+	}()
 
 	//Just to be sure data was inserted
 	insertId, _ := result.LastInsertId()

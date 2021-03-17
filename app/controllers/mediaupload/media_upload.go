@@ -12,7 +12,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"strings"
 	"time"
 )
 
@@ -41,8 +40,6 @@ func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 	// Logging the headers
 	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: "+tenantNamespace)
 
-	imageId := r.URL.Query().Get("image_id")
-
 	err = r.ParseMultipartForm(10 * MB)
 	if err != nil {
 		logs.Logger.Error(err)
@@ -63,13 +60,13 @@ func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info("File Size: ", handler.Size)
 	logs.Logger.Info("MIME Header: ", handler.Header)
 
-	extension := strings.Split(handler.Filename, ".")[1]
+	//extension := strings.Split(handler.Filename, ".")[1]
 
-	logs.Logger.Info("Image extension ", extension)
-	imageExt = extension
+	//logs.Logger.Info("Image extension ", extension)
+	//imageExt = extension
 
 	f := make(chan multipart.File)
-	go parseMultipartToFile(f, tenantNamespace, imageId, extension)
+	go parseMultipartToFile(f, tenantNamespace, handler.Filename)
 	f <- file
 	close(f)
 
@@ -87,49 +84,123 @@ func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, id string, extension string) {
-	// create a temp file
+func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, filename string) {
+	// Listen on the file channel
 	for file := range fileChannel {
 
+		// read the file bytes
 		fileBytes, err := ioutil.ReadAll(file)
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 
+		// get the working directory for generating the path for image storage
 		wd, err := os.Getwd()
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 
+		// join the working directory path with the path for image storage
 		join := filepath.Join(wd, "pkg/"+nmsp)
 
+		// create a new directory for storing the image
 		err = os.Mkdir(join, 0755)
 		if err != nil {
 			if os.IsExist(err) {
-				logs.Logger.Warn(err)
+				_ = logs.Logger.Warn(err)
 			} else {
-				logs.Logger.Error(err)
+				_ = logs.Logger.Error(err)
 				return
 			}
 		}
 
-		tempFile, err := ioutil.TempFile(join, "upload_*."+extension)
+		jsonFileToBeCreated := join + "\\f.json"
+
+		if _, err := os.Stat(jsonFileToBeCreated); os.IsNotExist(err) {
+			logs.Logger.Info("File doesnt Exist creating")
+			// but create a json file for storing the file info
+			jsonFile, err :=  os.Create(jsonFileToBeCreated)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			// create a map format for storing the file info
+			fileData := make(map[string]string)
+			fileData[filename] = join + "\\" + filename
+
+			// encode the file info to json bytes
+			jsonFileData, err := json.Marshal(fileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			// write the json bytes to the json file created
+			_, err = jsonFile.Write(jsonFileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+			_ = jsonFile.Close()
+		} else {
+			logs.Logger.Info("in else")
+			jsFile, err := os.Open(jsonFileToBeCreated)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			readFile, err := ioutil.ReadAll(jsFile)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			fileData := make(map[string]string)
+			err = json.Unmarshal(readFile, &fileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+			logs.Logger.Info(fileData)
+			// create a map format for storing the file info
+			fileData[filename] = join + "\\" + filename
+			logs.Logger.Info(fileData)
+
+			// encode the file info to json bytes
+			jsonFileData, err := json.Marshal(fileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			// write the json bytes to the json file created
+			_, err = jsFile.Write(jsonFileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+			_ = jsFile.Close()
+		}
+
+		tempFile, err := os.Create(join + "/" + filename)
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 
 		_, err = tempFile.Write(fileBytes)
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 
 		img, err := imaging.Open(tempFile.Name())
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 
@@ -137,16 +208,10 @@ func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, id str
 		src := imaging.Resize(imb, 500, 0, imaging.Lanczos)
 		err = imaging.Save(src, tempFile.Name())
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
-		tempFile.Close()
-
-		err = os.Rename(tempFile.Name(), path.Join(join, id+"."+extension))
-		if err != nil {
-			logs.Logger.Error(err)
-			return
-		}
+		_ = tempFile.Close()
 
 		logs.Logger.Info("Successfully resized image...")
 	}

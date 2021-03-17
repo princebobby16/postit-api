@@ -155,6 +155,12 @@ func ScheduleStatus(w http.ResponseWriter, r *http.Request) {
 		ws.Close()
 		return
 	}
+	//q := `UPDATE postit.scheduled_post SET post_status = true WHERE post_id=$1`
+	//_, err = db.Connection.Exec(q, "298bccf8-c103-474b-b708-a8797860feb0")
+	//if err != nil {
+	//	logs.Logger.Error(err)
+	//	return
+	//}
 
 	logs.Logger.Info("connection upgraded")
 	go Writer(ws, webSocketHandshake.TenantNamespace, db.Connection)
