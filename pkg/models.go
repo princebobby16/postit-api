@@ -84,7 +84,8 @@ type (
 	Post struct {
 		PostId       string    `json:"post_id"`
 		PostMessage  string    `json:"post_message"`
-		PostImage    []byte    `json:"post_image"`
+		PostImages   [][]byte  `json:"post_image"`
+		ImagePaths 	 []string  `json:"image_paths"`
 		HashTags     []string  `json:"hash_tags"`
 		PostStatus   bool      `json:"post_status"`
 		PostPriority bool      `json:"post_priority"`
@@ -124,6 +125,7 @@ type (
 		PostId         string    `json:"post_id"`
 		FacebookPostId string	 `json:"facebook_post_id"`
 		PostMessage    string    `json:"post_message"`
+		PostImages 	   [][]byte `json:"post_images"`
 		ImagePaths     []string  `json:"image_paths"`
 		HashTags       []string  `json:"hash_tags"`
 		PostStatus     bool      `json:"post_status"`

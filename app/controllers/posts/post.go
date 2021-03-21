@@ -207,8 +207,9 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 	// Logging the headers
 	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
 
+	// TODO: refactor fetch post to send images as well
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_image, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
@@ -229,6 +230,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			&post.PostId,
 			&post.FacebookPostId,
 			&post.PostMessage,
+			pq.Array(&post.PostImages),
 			pq.Array(&post.ImagePaths),
 			pq.Array(&post.HashTags),
 			&post.PostStatus,
@@ -243,6 +245,9 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 
 		if post.ImagePaths == nil {
 			post.ImagePaths = []string{}
+		}
+		if post.PostImages == nil {
+			post.PostImages = [][]byte{}
 		}
 		//	Build the post data list
 		postList = append(postList, post)
@@ -263,7 +268,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			Status:        "SUCCESS",
 		},
 	}
-	logs.Logger.Info(response)
+	logs.Logger.Info(response.Data[0].PostMessage)
 
 	w.WriteHeader(http.StatusFound)
 	err = json.NewEncoder(w).Encode(&response)

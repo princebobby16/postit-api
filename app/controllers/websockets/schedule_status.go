@@ -89,7 +89,7 @@ func FetchStatuses(connection *sql.DB, tenantNamespace string) ([]pkg.ScheduleSt
 	var posts []pkg.Post
 	if schedules != nil {
 
-		query = fmt.Sprintf("SELECT post_id, post_message, hash_tags, post_image, post_status FROM %s.scheduled_post WHERE scheduled_post_id = $1 AND post_status = $2", tenantNamespace)
+		query = fmt.Sprintf("SELECT post_id, post_message, hash_tags, post_image, image_paths, post_status FROM %s.scheduled_post WHERE scheduled_post_id = $1 AND post_status = $2", tenantNamespace)
 
 		for _, i := range schedules {
 			rows, err = connection.Query(query, i.ScheduleId, true)
@@ -103,7 +103,8 @@ func FetchStatuses(connection *sql.DB, tenantNamespace string) ([]pkg.ScheduleSt
 					&post.PostId,
 					&post.PostMessage,
 					pq.Array(&post.HashTags),
-					&post.PostImage,
+					pq.Array(&post.PostImages),
+					pq.Array(&post.ImagePaths),
 					&post.PostStatus,
 				)
 				if err != nil {
