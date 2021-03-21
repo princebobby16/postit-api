@@ -86,7 +86,7 @@ func FetchStatuses(connection *sql.DB, tenantNamespace string) ([]pkg.ScheduleSt
 	}
 
 	var scheduleStatuses []pkg.ScheduleStatus
-	var posts []pkg.Post
+	var posts []pkg.ScheduledPost
 	if schedules != nil {
 
 		query = fmt.Sprintf("SELECT post_id, post_message, hash_tags, post_image, image_paths, post_status FROM %s.scheduled_post WHERE scheduled_post_id = $1 AND post_status = $2", tenantNamespace)
@@ -98,7 +98,7 @@ func FetchStatuses(connection *sql.DB, tenantNamespace string) ([]pkg.ScheduleSt
 			}
 
 			for rows.Next() {
-				var post pkg.Post
+				var post pkg.ScheduledPost
 				err = rows.Scan(
 					&post.PostId,
 					&post.PostMessage,

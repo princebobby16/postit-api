@@ -31,7 +31,7 @@ type (
 		From time.Time 			`json:"from"`
 		To time.Time 			`json:"to"`
 		TotalPost int 			`json:"total_post"`
-		Posts     []Post       `json:"posts"`
+		Posts []ScheduledPost    `json:"posts"`
 		PostCount int          `json:"post_count"`
 		CreatedAt time.Time    `json:"created_at"`
 		UpdatedAt time.Time    `json:"updated_at"`
@@ -81,11 +81,22 @@ type (
 		Name string `json:"name"`
 	}
 
-	Post struct {
+	ScheduledPost struct {
 		PostId       string    `json:"post_id"`
 		PostMessage  string    `json:"post_message"`
 		PostImages   [][]byte  `json:"post_image"`
 		ImagePaths 	 []string  `json:"image_paths"`
+		HashTags     []string  `json:"hash_tags"`
+		PostStatus   bool      `json:"post_status"`
+		PostPriority bool      `json:"post_priority"`
+		CreatedOn    time.Time `json:"created_on"`
+		UpdatedOn    time.Time `json:"updated_on"`
+	}
+
+	Post struct {
+		PostId       string    `json:"post_id"`
+		PostMessage  string    `json:"post_message"`
+		PostImage    []byte    `json:"post_image"`
 		HashTags     []string  `json:"hash_tags"`
 		PostStatus   bool      `json:"post_status"`
 		PostPriority bool      `json:"post_priority"`
