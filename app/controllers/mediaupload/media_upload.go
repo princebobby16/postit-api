@@ -269,7 +269,47 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = os.Remove(imageStoragePath + "/" + fileName + "." + imageExt)
+	jsFile, err := os.OpenFile(imageStoragePath + "\\f.json", os.O_RDWR, 0644)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		return
+	}
+
+	readFile, err := ioutil.ReadAll(jsFile)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		return
+	}
+
+	fileData := make(map[string]string)
+	err = json.Unmarshal(readFile, &fileData)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		return
+	}
+
+	delete(fileData, fileName)
+
+	jsonFileData, err := json.Marshal(fileData)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		return
+	}
+	logs.Logger.Info(string(jsonFileData))
+
+	// write the json bytes to the json file created
+	err = ioutil.WriteFile(imageStoragePath + "\\f.json", jsonFileData, 0644)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		return
+	}
+	err = jsFile.Close()
+	if err != nil {
+		logs.Logger.Info(err)
+		return
+	}
+
+	err = os.Remove(imageStoragePath + "/" + fileName)
 	if err != nil {
 		logs.Logger.Error(err)
 		return
@@ -287,5 +327,4 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 			Status:        "SUCCESS",
 		},
 	})
-
 }

@@ -208,7 +208,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
 
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, image_extension, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, image_paths, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
@@ -229,7 +229,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			&post.PostId,
 			&post.FacebookPostId,
 			&post.PostMessage,
-			pq.Array(&post.ImageExtension),
+			pq.Array(&post.ImagePaths),
 			pq.Array(&post.HashTags),
 			&post.PostStatus,
 			&post.PostPriority,
@@ -241,8 +241,8 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if post.ImageExtension == nil {
-			post.ImageExtension = []string{}
+		if post.ImagePaths == nil {
+			post.ImagePaths = []string{}
 		}
 		//	Build the post data list
 		postList = append(postList, post)

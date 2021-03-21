@@ -124,7 +124,7 @@ type (
 		PostId         string    `json:"post_id"`
 		FacebookPostId string	 `json:"facebook_post_id"`
 		PostMessage    string    `json:"post_message"`
-		ImageExtension []string  `json:"image_extension"`
+		ImagePaths     []string  `json:"image_paths"`
 		HashTags       []string  `json:"hash_tags"`
 		PostStatus     bool      `json:"post_status"`
 		PostPriority   bool      `json:"post_priority"`
