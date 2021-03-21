@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS postit.post
     facebook_post_id character varying(200),
     post_message text NOT NULL,
     post_image bytea[],
-    image_extension character varying(200)[],
+    image_paths character varying(200)[],
     hash_tags text[],
     post_status boolean NOT NULL,
     post_priority boolean NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS postit.scheduled_post
     facebook_post_id character varying(200),
     post_message text NOT NULL,
     post_image bytea,
-    image_extension character varying(200)[],
+    image_paths character varying(200)[],
     hash_tags text[],
     post_status boolean NOT NULL,
     post_priority boolean NOT NULL,
@@ -93,7 +93,7 @@ DECLARE
     postId       uuid;
     postMessage  text;
     postImage    bytea;
-    imageExtension character varying (200)[];
+    imagePath character varying (200)[];
     hashTags     text[];
     postStatus boolean;
     postPriority boolean;
@@ -107,10 +107,10 @@ BEGIN
     FOREACH postId IN ARRAY postList
     LOOP
 --      Use the post ids to retrieve the post info from the post table
-        SELECT facebook_post_id, post_message, post_image, image_extension, hash_tags, post_priority, post_status INTO facebookPostId, postMessage, postImage, imageExtension, hashTags, postPriority, postStatus FROM postit.post WHERE post_id = postId;
+        SELECT facebook_post_id, post_message, post_image, image_paths, hash_tags, post_priority, post_status INTO facebookPostId, postMessage, postImage, imagePath, hashTags, postPriority, postStatus FROM postit.post WHERE post_id = postId;
 
 --      Store it in the scheduled data table
-        INSERT INTO postit.scheduled_post(scheduled_post_id, post_id, facebook_post_id, post_message, post_image, image_extension, hash_tags, post_status, post_priority) VALUES (scheduleId, postId, facebookPostId, postMessage, postImage, imageExtension, hashTags, postStatus, postPriority);
+        INSERT INTO postit.scheduled_post(scheduled_post_id, post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_status, post_priority) VALUES (scheduleId, postId, facebookPostId, postMessage, postImage, imagePath, hashTags, postStatus, postPriority);
 
     END LOOP;
 

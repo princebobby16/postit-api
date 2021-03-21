@@ -79,14 +79,17 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var imageExtensions []string
-	var imageExtension string
+	var imagePaths []string
 	var images [][]byte
 	var imageBytes []byte
 
 	if fileInfo != nil {
 		for _, file := range fileInfo {
 			logs.Logger.Info(file.Name())
+
+			if file.Name() == "f.json"{
+				continue
+			}
 
 			fileLocation := filepath.Join(path, file.Name())
 
@@ -101,21 +104,40 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 				logs.Logger.Error(err)
 				return
 			}
-			switch http.DetectContentType(imageBytes) {
-			case "image/png":
-				imageExtension = ".png"
-			case "image/jpg":
-				imageExtension = ".jpg"
-			case "image/jpeg":
-				imageExtension = ".jpeg"
-			default:
-				imageExtension = ".jpg"
-			}
-			logs.Logger.Info("Image extension: ", imageExtension)
-			imageExtensions = append(imageExtensions, imageExtension)
+			_ = openImage.Close()
 			images = append(images, imageBytes)
+
+			jsonFile, err := os.Open(filepath.Join(path, "f.json"))
+			if err != nil {
+				logs.Logger.Error(err)
+				return
+			}
+
+			readFile, err := ioutil.ReadAll(jsonFile)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+			err = jsonFile.Close()
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			fileData := make(map[string]string)
+			err = json.Unmarshal(readFile, &fileData)
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
+
+			imagePath := fileData[file.Name()]
+			logs.Logger.Info(imagePath)
+			imagePaths = append(imagePaths, imagePath)
 		}
 	}
+
+	logs.Logger.Info(imagePaths)
 
 	// Generate hashtag list
 	hashTagList := pkg.GenerateHashTags(post.HashTags)
@@ -127,10 +149,10 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Build and use a crud service
 	//build query
-	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_image, image_extension, hash_tags, post_status, post_priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
+	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_status, post_priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
 	logs.Logger.Info("Db Query: ", query)
 
-	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imageExtensions), pq.Array(post.HashTags), post.PostStatus, post.PostPriority)
+	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostStatus, post.PostPriority)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
 		return

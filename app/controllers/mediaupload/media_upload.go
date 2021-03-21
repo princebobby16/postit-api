@@ -183,7 +183,11 @@ func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, filena
 				_ = logs.Logger.Error(err)
 				return
 			}
-			_ = jsFile.Close()
+			err = jsFile.Close()
+			if err != nil {
+				logs.Logger.Info(err)
+				return
+			}
 		}
 
 		tempFile, err := os.Create(join + "/" + filename)
