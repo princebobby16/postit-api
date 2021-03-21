@@ -208,7 +208,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
 
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, image_paths, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_image, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
