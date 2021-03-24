@@ -149,10 +149,10 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Build and use a crud service
 	//build query
-	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_status, post_priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
+	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_status, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", tenantNamespace)
 	logs.Logger.Info("Db Query: ", query)
 
-	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostStatus, post.PostPriority)
+	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostStatus, post.PostPriority, false)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
 		return
@@ -209,7 +209,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: refactor fetch post to send images as well
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_priority, post_status, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
@@ -235,6 +235,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			pq.Array(&post.HashTags),
 			&post.PostStatus,
 			&post.PostPriority,
+			&post.Scheduled,
 			&post.CreatedOn,
 			&post.UpdatedOn,
 		)

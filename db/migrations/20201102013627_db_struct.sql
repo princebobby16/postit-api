@@ -7,10 +7,11 @@ CREATE TABLE IF NOT EXISTS postit.post
     post_id uuid UNIQUE NOT NULL,
     facebook_post_id character varying(200),
     post_message text NOT NULL,
-    post_image bytea[],
+    post_images bytea[],
     image_paths character varying(200)[],
     hash_tags text[],
     post_status boolean NOT NULL,
+    scheduled boolean NOT NULL,
     post_priority boolean NOT NULL,
     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -26,25 +27,13 @@ CREATE TABLE IF NOT EXISTS postit.schedule
     schedule_to timestamp with time zone NOT NULL,
     post_ids character varying(200)[] NOT NULL,
     duration_per_post float NOT NULL,
+    facebook character varying(200)[] NOT NULL,
+    twitter character varying(200)[] NOT NULL,
+    linked_in character varying(200)[] NOT NULL,
     is_due boolean,
     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (schedule_id)
-);
-
-CREATE TABLE IF NOT EXISTS postit.scheduled_post
-(
-    scheduled_post_id uuid NOT NULL,
-    post_id uuid NOT NULL,
-    facebook_post_id character varying(200),
-    post_message text NOT NULL,
-    post_image bytea,
-    image_paths character varying(200)[],
-    hash_tags text[],
-    post_status boolean NOT NULL,
-    post_priority boolean NOT NULL,
-    created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS postit.application_info
@@ -63,89 +52,106 @@ CREATE TABLE IF NOT EXISTS postit.application_info
     PRIMARY KEY(application_uuid)
 );
 
--- +goose StatementBegin
-create or replace function postit.change_post_status_in_post_table_aut() returns trigger as $$
-DECLARE
-    postId uuid = OLD.post_id;
-    facebookId character varying(100) = OLD.facebook_post_id;
-BEGIN
-    UPDATE postit.post SET post_status = true AND facebook_post_id = facebookId WHERE post_id = postId;
-    return old;
-END;
-$$ language plpgsql;
+-- CREATE TABLE IF NOT EXISTS postit.scheduled_post
+-- (
+--     id serial,
+--     scheduled_post_id uuid NOT NULL,
+--     post_id uuid NOT NULL,
+--     facebook_post_id character varying(200),
+--     post_message text NOT NULL,
+--     post_images bytea[],
+--     image_paths character varying(200)[],
+--     hash_tags text[],
+--     post_status boolean NOT NULL,
+--     post_priority boolean NOT NULL,
+--     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     updated_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     PRIMARY KEY (id)
+-- );
 
-DROP TRIGGER IF EXISTS post_aut ON postit.scheduled_post;
-CREATE TRIGGER post_aut AFTER INSERT ON postit.scheduled_post FOR EACH ROW EXECUTE PROCEDURE postit.change_post_status_in_post_table_aut();
+-- +goose StatementBegin
+-- create or replace function postit.change_post_status_in_post_table_aut() returns trigger as $$
+-- DECLARE
+--     postId uuid = OLD.post_id;
+--     facebookId character varying(100) = OLD.facebook_post_id;
+-- BEGIN
+--     UPDATE postit.post SET post_status = true AND facebook_post_id = facebookId WHERE post_id = postId;
+--     return old;
+-- END;
+-- $$ language plpgsql;
+
+-- CREATE TRIGGER post_ait AFTER INSERT ON postit.scheduled_post FOR EACH ROW EXECUTE PROCEDURE postit.change_post_status_in_post_table_aut();
 -- +goose StatementEnd
 
 -- +goose StatementBegin
-create or replace function postit.store_schedule_data_in_scheduled_post_table_ait() returns trigger as $$
+-- create or replace function postit.store_schedule_data_in_scheduled_post_table_ait() returns trigger as $$
+--
+-- DECLARE
+-- --     schedule vars
+--     iD           uuid := NEW.schedule_id;
+--     scheduleId   uuid;
+--     scheduleFrom timestamp;
+--     scheduleTo   timestamp;
+--     postList     varchar(200)[];
+--
+-- --     Post vars
+--     postId       uuid;
+--     postMessage  text;
+--     postImages    bytea[];
+--     imagePath character varying (200)[];
+--     hashTags     text[];
+--     postStatus boolean;
+--     postPriority boolean;
+--     facebookPostId character varying (200);
+--
+-- BEGIN
+--
+-- --     Get the schedule data
+--     SELECT schedule_id, schedule_from, schedule_to, post_ids INTO scheduleId, scheduleFrom, scheduleTo, postList FROM postit.schedule WHERE schedule_id = iD;
+-- --     Loop through the post array retrieved from the schedule table to get the post ids
+--     FOREACH postId IN ARRAY postList
+--     LOOP
+-- --      Use the post ids to retrieve the post info from the post table
+--         SELECT facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status INTO facebookPostId, postMessage, postImages, imagePath, hashTags, postPriority, postStatus FROM postit.post WHERE post_id = postId;
+--
+-- --      Store it in the scheduled data table
+--         INSERT INTO postit.scheduled_post(scheduled_post_id, post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_status, post_priority) VALUES (scheduleId, postId, facebookPostId, postMessage, postImages, imagePath, hashTags, postStatus, postPriority);
+--
+--     END LOOP;
+--
+--     RETURN NEW;
+--
+-- END;
+-- $$ language plpgsql;
 
-DECLARE
---     schedule vars
-    iD           uuid := NEW.schedule_id;
-    scheduleId   uuid;
-    scheduleFrom timestamp;
-    scheduleTo   timestamp;
-    postList     varchar(200)[];
-
---     Post vars
-    postId       uuid;
-    postMessage  text;
-    postImage    bytea;
-    imagePath character varying (200)[];
-    hashTags     text[];
-    postStatus boolean;
-    postPriority boolean;
-    facebookPostId character varying (200);
-
-BEGIN
-
---     Get the schedule data
-    SELECT schedule_id, schedule_from, schedule_to, post_ids INTO scheduleId, scheduleFrom, scheduleTo, postList FROM postit.schedule WHERE schedule_id = iD;
---     Loop through the post array retrieved from the schedule table to get the post ids
-    FOREACH postId IN ARRAY postList
-    LOOP
---      Use the post ids to retrieve the post info from the post table
-        SELECT facebook_post_id, post_message, post_image, image_paths, hash_tags, post_priority, post_status INTO facebookPostId, postMessage, postImage, imagePath, hashTags, postPriority, postStatus FROM postit.post WHERE post_id = postId;
-
---      Store it in the scheduled data table
-        INSERT INTO postit.scheduled_post(scheduled_post_id, post_id, facebook_post_id, post_message, post_image, image_paths, hash_tags, post_status, post_priority) VALUES (scheduleId, postId, facebookPostId, postMessage, postImage, imagePath, hashTags, postStatus, postPriority);
-
-    END LOOP;
-
-    RETURN NEW;
-
-END;
-$$ language plpgsql;
-
-DROP TRIGGER IF EXISTS schedule_ait ON postit.schedule;
-CREATE TRIGGER schedule_ait AFTER INSERT ON postit.schedule FOR EACH ROW EXECUTE PROCEDURE postit.store_schedule_data_in_scheduled_post_table_ait();
+-- CREATE TRIGGER schedule_ait AFTER INSERT ON postit.schedule FOR EACH ROW EXECUTE PROCEDURE postit.store_schedule_data_in_scheduled_post_table_ait();
 -- +goose StatementEnd
 
 -- +goose StatementBegin
-create or replace function postit.delete_posts_from_scheduled_post_table_bdt() returns trigger as $$
+-- create or replace function postit.delete_posts_from_scheduled_post_table_bdt() returns trigger as $$
+--
+-- DECLARE
+--
+--     schedule_id uuid = OLD.schedule_id;
+--
+-- BEGIN
+--
+--     DELETE FROM postit.scheduled_post WHERE scheduled_post_id = schedule_id;
+--
+--     RETURN OLD;
+--
+-- END;
+-- $$ language plpgsql;
 
-DECLARE
-
-    schedule_id uuid = OLD.schedule_id;
-
-BEGIN
-
-    DELETE FROM postit.scheduled_post WHERE scheduled_post_id = schedule_id;
-
-    RETURN OLD;
-
-END;
-$$ language plpgsql;
-
-DROP TRIGGER IF EXISTS schedule_bdt ON postit.schedule;
-CREATE TRIGGER schedule_bdt BEFORE DELETE ON postit.schedule FOR EACH ROW EXECUTE PROCEDURE postit.delete_posts_from_scheduled_post_table_bdt();
+-- CREATE TRIGGER schedule_bdt BEFORE DELETE ON postit.schedule FOR EACH ROW EXECUTE PROCEDURE postit.delete_posts_from_scheduled_post_table_bdt();
 -- +goose StatementEnd
 
 -- SQL in section 'Up' is executed when this migration is applied
 
 -- +goose Down
+DROP TRIGGER IF EXISTS post_aut ON postit.scheduled_post;
+DROP TRIGGER IF EXISTS schedule_ait ON postit.schedule;
+DROP TRIGGER IF EXISTS schedule_bdt ON postit.schedule;
 DROP TABLE IF EXISTS postit.post;
 DROP TABLE IF EXISTS postit.current_schedule;
 DROP TABLE IF EXISTS postit.scheduled_post;

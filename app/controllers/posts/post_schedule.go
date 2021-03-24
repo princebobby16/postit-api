@@ -103,7 +103,7 @@ func CountSchedule(w http.ResponseWriter, r *http.Request) {
 		PostCount: postCount,
 		ScheduleCount: scheduleCount,
 		AccountCount: accountCount,
-		Meta: pkg.Meta{
+		Meta: pkg.Meta {
 			Timestamp:     time.Now(),
 			TransactionId: transactionId.String(),
 			TraceId:       traceId,
@@ -210,7 +210,7 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	// TODO: Build and use a crud service
 	//build query
 	query := fmt.Sprintf(
-		"INSERT INTO %s.schedule (schedule_id, schedule_title, post_to_feed, schedule_from, schedule_to, post_ids, duration_per_post, is_due) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
+		"INSERT INTO %s.schedule (schedule_id, schedule_title, post_to_feed, schedule_from, schedule_to, post_ids, facebook, twitter, linked_in, duration_per_post, is_due) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", tenantNamespace)
 
 	result, err := db.Connection.Exec(
 		query,
@@ -220,6 +220,9 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 		postSchedule.From,
 		postSchedule.To,
 		pq.Array(postSchedule.PostIds),
+		pq.Array(postSchedule.Profiles.Facebook),
+		pq.Array(postSchedule.Profiles.Twitter),
+		pq.Array(postSchedule.Profiles.LinkedIn),
 		durationPerPostInSeconds,
 		false,
 	)
@@ -280,6 +283,17 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 		logs.Logger.Error(err)
 		w.WriteHeader(http.StatusServiceUnavailable)
 		return
+	}
+
+	for i := 0; i < len(postSchedule.PostIds); i++ {
+		// change scheduled status of posts
+		query = fmt.Sprintf(`UPDATE %s.post SET scheduled = $1 WHERE post_id = $2;`, tenantNamespace)
+		_, err = db.Connection.Exec(query, true, postSchedule.PostIds[i])
+		if err != nil {
+			_ = logs.Logger.Error(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	// Build response
@@ -391,6 +405,9 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 			pq.Array(&post.PostIds),
 			&post.Duration,
 			&post.IsDue,
+			pq.Array(&post.Profiles.Facebook),
+			pq.Array(&post.Profiles.Twitter),
+			pq.Array(&post.Profiles.LinkedIn),
 			&post.CreatedOn,
 			&post.UpdatedOn,
 		)
@@ -556,10 +573,21 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(uPostId)
 
 	//TODO: Validate post uuid
-	query := fmt.Sprintf("UPDATE %s.schedule SET schedule_title = $1, schedule_from = $2, schedule_to = $3, post_ids = $4, post_to_feed = $5 WHERE schedule_id = $6", tenantNamespace)
+	query := fmt.Sprintf("UPDATE %s.schedule SET schedule_title = $1, schedule_from = $2, schedule_to = $3, post_ids = $4, post_to_feed = $5, facebook = $6, twitter = $7, linked_in = $8 WHERE schedule_id = $9", tenantNamespace)
 	logs.Logger.Info(query)
 
-	_, err = db.Connection.Exec(query, post.ScheduleTitle, post.From, post.To, pq.Array(post.PostIds), post.PostToFeed, uPostId)
+	_, err = db.Connection.Exec(
+		query,
+		post.ScheduleTitle,
+		post.From,
+		post.To,
+		pq.Array(post.PostIds),
+		post.PostToFeed,
+		pq.Array(post.Profiles.Facebook),
+		pq.Array(post.Profiles.Twitter),
+		pq.Array(post.Profiles.LinkedIn),
+		uPostId,
+	)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		_ = json.NewEncoder(w).Encode(struct {

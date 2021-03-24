@@ -40,6 +40,12 @@ func InitRoutes() *mux.Router {
 			Method:  http.MethodPost,
 			Handler: controllers.EmailNotificationService,
 		},
+		Route{
+			Name:    "Delete Uploaded Files",
+			Path:    "/delete/all",
+			Method:  http.MethodDelete,
+			Handler: mediaupload.DeleteUploadedFiles,
+		},
 		// posts
 		Route{
 			Name:    "Create Post",

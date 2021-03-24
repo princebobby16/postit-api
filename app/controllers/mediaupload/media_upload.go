@@ -328,3 +328,86 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 }
+
+func DeleteUploadedFiles(w http.ResponseWriter, r *http.Request) {
+	transactionId := uuid.NewV4()
+
+	headers, err := pkg.ValidateHeaders(r)
+	if err != nil {
+		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusBadRequest)
+		return
+	}
+
+	//Get the relevant headers
+	traceId := headers["trace-id"]
+	tenantNamespace := headers["tenant-namespace"]
+
+	// Logging the headers
+	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: " + tenantNamespace)
+
+	workingDir, err := os.Getwd()
+	if err != nil {
+		logs.Logger.Error(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	logs.Logger.Info(workingDir)
+
+	imageStoragePath := path.Join(workingDir, "/pkg/" + tenantNamespace)
+	logs.Logger.Info(imageStoragePath)
+
+	if imageStoragePath == "" {
+		logs.Logger.Warn("No image has been uploaded to server")
+		w.WriteHeader(http.StatusGone)
+		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+			Data: pkg.Data{
+				Id:        "",
+				UiMessage: "no file found, please upload image!",
+			},
+			Meta: pkg.Meta{
+				Timestamp:     time.Now(),
+				TransactionId: transactionId.String(),
+				TraceId:       traceId,
+				Status:        "SUCCESS",
+			},
+		})
+		return
+	}
+
+	err = os.RemoveAll(imageStoragePath)
+	if err != nil {
+		_ = logs.Logger.Error(err)
+		if os.IsNotExist(err) {
+
+		} else {
+			_ = logs.Logger.Error(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+				Data: pkg.Data{
+					Id:        "",
+					UiMessage: "something went wrong! contact admin",
+				},
+				Meta: pkg.Meta{
+					Timestamp:     time.Now(),
+					TransactionId: transactionId.String(),
+					TraceId:       traceId,
+					Status:        "SUCCESS",
+				},
+			})
+			return
+		}
+	}
+
+	_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+		Data: pkg.Data {
+			Id:        "",
+			UiMessage: "FILES DELETED",
+		},
+		Meta: pkg.Meta {
+			Timestamp:     time.Now(),
+			TransactionId: transactionId.String(),
+			TraceId:       traceId,
+			Status:        "SUCCESS",
+		},
+	})
+}

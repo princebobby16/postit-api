@@ -104,6 +104,12 @@ type (
 		UpdatedOn    time.Time `json:"updated_on"`
 	}
 
+	SocialMediaProfiles struct {
+		Facebook []string 			`json:"facebook"`
+		Twitter []string 			`json:"twitter"`
+		LinkedIn []string 			`json:"linked_in"`
+	}
+
 	PostSchedule struct {
 		ScheduleId    string    `json:"schedule_id"`
 		ScheduleTitle string    `json:"schedule_title"`
@@ -113,6 +119,7 @@ type (
 		PostIds       []string  `json:"post_ids"`
 		Duration      float64   `json:"duration"`
 		IsDue         bool      `json:"is_due"`
+		Profiles SocialMediaProfiles `json:"profiles"`
 		CreatedOn     time.Time `json:"created_on"`
 		UpdatedOn     time.Time `json:"updated_on"`
 	}
@@ -139,6 +146,7 @@ type (
 		PostImages 	   [][]byte `json:"post_images"`
 		ImagePaths     []string  `json:"image_paths"`
 		HashTags       []string  `json:"hash_tags"`
+		Scheduled  	   bool		`json:"scheduled"`
 		PostStatus     bool      `json:"post_status"`
 		PostPriority   bool      `json:"post_priority"`
 		CreatedOn      time.Time `json:"created_on"`
