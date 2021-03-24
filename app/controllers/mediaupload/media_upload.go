@@ -21,8 +21,6 @@ const (
 	MB
 )
 
-var imageExt string
-
 func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 
 	transactionId := uuid.NewV4()
