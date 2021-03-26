@@ -25,7 +25,7 @@ func main() {
 
 	r := router.InitRoutes()
 
-	origins := handlers.AllowedOrigins([]string{ /*"https://postit-ui.herokuapp.com"*/ "*"})
+	origins := handlers.AllowedOrigins([]string{ /*"https://postit-ui.herokuapp.com"*/ "*", "http://localhost:8080"})
 	headers := handlers.AllowedHeaders([]string{
 		"Content-Type",
 		"Content-Length",
