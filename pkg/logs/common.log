@@ -1,0 +1,64 @@
+1616778114328360200 [Info] -----BEGIN PRIVATE KEY-----
+MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
+6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
+4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
+tVdVmusp3LL2Zlav2w2k3P6DmY8rFc/LQg+2tRcmU/KuHzniDHl0diuNl2VLa7WE
+rs9FmrhhkXxp3kyee9mhlomL1EnKchV5W0APQ07H1jqw7gQEtU6D/4LxXwhD7MKJ
+DuFQTSCMaABAbgPwYyP4+le2VLNPkw/5bolPCwIDAQABAoIBAQDDzyTCLEywBpKW
+j6HppoAxrCtyg+cmakCN352oPeHfvSLBJ3yV5nWCgHv22lw2rqUs+Tcllqa0CxGM
+4pjGz0gvSWbCzxv66/ntuTEWWt+ahkfZ31mq8S5traZd0Y5bNwoHfDVf/NrtrqwQ
+ZYiLQB6p7Hvy8ItEN0aIgFxUfCRyYv2RHvRW86YVKT7eK2MHQZBGFWJEIhd6yyey
+06zaMfL8nsZRcG1gp/T/JxE88z1GDwbdHnUFgEXPu1CMeV0n7c2pZsLVveWdgciz
+RxhejD9D0+3rRLf4tguwp9kQUT4XRl43FklAwEX5RQSQ582o1AfzpkLwVawAtVCz
+9bj9UL2BAoGBAORbldtJsMV7omx7HQLWvtlAziEkJ+rpfbNK5R5583m6OidC235v
+ZYxA6CFCDw4x1XplcjJfylAKm9X1S+rULQKCP584YEcb9wgc/zwIZXV+X2vr5gNG
+zJBrumHHwe9G4oaN25svXoqjv21UupztraTpV0udCXpjS1tN6OABXURhAoGBAPeE
+FaVx/AGbECr6LNPhdj4cSfXl+WuboOCRUSkxS7R7KM/QZMFW/jcFL/uz/8Uz6aEs
+S28dTd2y/YuIIbCaN8G3bRT/K3/9btdqpL7GOTFxe0Y/pMhNl9vaN3ItR1OueNH3
++9BgNFVE1lXeMiIIJc5sfzUwTmZo52f9NRD5V8rrAoGAUJSY3ta0EBu+hvUymYvZ
+sKQTmNI/W7+k4Z2uGAEEj5HNb4lCFu2MMd+9ie7bjTC8mgIuN+Rhabk0oF18upLA
+h0Aa3z5viugtVamVz0NPOhSr61NEySc0jEnXbSWmI58p1D0+nxYqEFYT+KqLZ1Df
+k2/bpAz4CT38m210nYcduEECgYEApDddCTRzxzjy5CCxhy3p/lFUfLHE5rENbpDb
+MSJEoQypSh9wCZpG9YgairuksVi847L4pVLi63kqoN2DxKC852hkFe8qFDO3y3I0
+tWHcZkJtUHE/Sam5XCMOcFE8Jnf2LxCBYIHDluMh9TyDNHMFakwvpcFT8rwc87BZ
++dYEelsCgYAWI4/ZQD++UidorpYGfoLRKRHwjo48T9z5wI+9qRb9YLYTmwT+56Pv
+RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
+xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
+-----END PRIVATE KEY-----
+
+1616778114914394500 [Info] Connected to Postgres DB successfully
+1616778114916392600 [Info] Server running on port5379
+1616778117927567700 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
+1616778117929566700 [Warn] check toke expiration time
+1616778117937566000 [Info] Token expired! getting a new one....
+1616778117984569300 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3ZDRkMjY1Yi0zODg3LTRiNDctYTQ3MC0wNGE2ZTBjOTYxMjciLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBvc3RJdCIsInN1YiI6IlVzZXIgcmVmcmVzaCB0b2tlbiIsImV4cCI6MTYxNjc3OTMxNywiaWF0IjoxNjE2Nzc4MTE3fQ.twxHBlF-UavkJtuoXjQRiBSvEo5N2DQticcPxwDYJIhBfigqplJaziZaVgGdOM8zN4b0AmlVFJ5LhoEACNCDQQ
+1616778117984569300 [Warn] About to get to validator
+1616778117984569300 [Info] Passed validator
+1616778117985569200 [Info] ===========================================
+1616778117986570200 [Info] Handling Create Post Schedule ...
+1616778117986570200 [Info] ===========================================
+1616778117986570200 [Info] Transaction Id: 68a8b24d-4dbc-4184-b346-d36472402c55
+1616778117986570200 [Info] Headers => TraceId: %s, TenantNamespace: %sb45368f6-396d-46c8-b6dc-a5f18b02ed52postit
+1616778117987569700 [Info] {
+	"schedule_title": "Q Schedule",
+	"post_to_feed": true,
+	"from": "2021-03-26T17:01:57.769Z",
+	"to": "2021-03-26T14:28:00.000Z",
+	"profiles": {
+		"facebook": ["243952730431775"],
+		"twitter": ["njfbnkfftgnklklgmf"]
+	},
+	"post_ids": [
+		"0d896324-cd30-47d1-8612-eae28e8e2ad9",
+		"2f6b2b7c-926e-4105-81fc-0beb3ce17b58"
+	]
+}
+1616778118003570100 [Info] { Q Schedule true 2021-03-26 17:01:57.769 +0000 UTC 2021-03-26 14:28:00 +0000 UTC [0d896324-cd30-47d1-8612-eae28e8e2ad9 2f6b2b7c-926e-4105-81fc-0beb3ce17b58] 0 false {[243952730431775] [njfbnkfftgnklklgmf] []} 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}
+1616778118081575200 [Info] -4618.8845
+1616778118082575200 [Info] e2ded4ef-21a1-4433-a847-01034fa07336
+1616778118082575200 [Info] Post Schedule Id: e2ded4ef-21a1-4433-a847-01034fa07336
+1616778118093575800 [Info] Post Duration: -4618.8845
+1616778118200581500 [Info] 0
+1616778119558659500 [Info] Post "http://localhost:7894/schedule": dial tcp [::1]:7894: connectex: No connection could be made because the target machine actively refused it.
+1616778304655172200 [Warn] http: Server closed
+1616778305155704200 [Warn] shutting down

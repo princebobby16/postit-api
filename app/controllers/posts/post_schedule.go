@@ -195,6 +195,28 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	}
 	logs.Logger.Info(postSchedule)
 
+	for _, postId := range postSchedule.PostIds {
+		query := fmt.Sprintf("UPDATE %s.post SET scheduled = $1 WHERE post_id = $2", tenantNamespace)
+		_, err = db.Connection.Exec(query, true, postId)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			logs.Logger.Info(err)
+			_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+				Data: pkg.Data{
+					Id:        "",
+					UiMessage: "Something went wrong. Contact admin",
+				},
+				Meta: pkg.Meta{
+					Timestamp:     time.Now(),
+					TransactionId: transactionId.String(),
+					TraceId:       traceId,
+					Status:        "FAILED",
+				},
+			})
+			return
+		}
+	}
+
 	durationPerPostInSeconds := pkg.GenerateDurationForEachPost(postSchedule)
 	logs.Logger.Info(durationPerPostInSeconds)
 

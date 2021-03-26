@@ -1,7 +1,3 @@
 .env
 .idea
-postit_api.exe
-/pkg/logs/*.log
-/pkg/temp_files/*.jpeg
-/pkg/temp_files/*.jpg
-/pkg/temp_files/*.png
+go_build_gitlab_com_pbobby001_postit_api.exe
