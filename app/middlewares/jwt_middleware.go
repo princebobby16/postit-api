@@ -89,18 +89,8 @@ func JWTMiddleware(next http.Handler) http.Handler {
 
 				logs.Logger.Info("refresh-token: ", resp.Header.Get("refresh-token"))
 			}
-			logs.Logger.Warn("Before Aud check")
-
-			//if jwtClaims.Audience[1] != r.Header.Get("tenant-namespace") && jwtClaims.Audience[0] != "postit-audience" {
-			//	logs.Logger.Info("Jwt Claim Audience", jwtClaims.Audience[0], jwtClaims.Audience[1])
-			//	logs.Logger.Info("Invalid tenant-namespace")
-			//	w.WriteHeader(http.StatusUnauthorized)
-			//	_, _ = w.Write([]byte("Wrong org namespace header"))
-			//	return
-			//}
 
 			logs.Logger.Warn("About to get to validator")
-
 			validator := jwt.NewValidator(
 				jwt.AudienceChecker(jwt.Audience{"postit-audience", r.Header.Get("tenant-namespace")}),
 			)
