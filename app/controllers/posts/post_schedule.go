@@ -207,6 +207,18 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	postSchedule.Duration = durationPerPostInSeconds
 	logs.Logger.Info("Post Duration: ", postSchedule.Duration)
 
+	if postSchedule.Profiles.Facebook == nil {
+		postSchedule.Profiles.Facebook = []string{}
+	}
+
+	if postSchedule.Profiles.Twitter == nil {
+		postSchedule.Profiles.Twitter = []string{}
+	}
+
+	if postSchedule.Profiles.LinkedIn == nil {
+		postSchedule.Profiles.LinkedIn = []string{}
+	}
+
 	// TODO: Build and use a crud service
 	//build query
 	query := fmt.Sprintf(
@@ -250,7 +262,6 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(insertId)
 
 	// notify the scheduler micro service
-	//retry := false
 	reqBody, _ := json.Marshal(postSchedule)
 	client := &http.Client{}
 	req, err := http.NewRequest(http.MethodPost, os.Getenv("SCHEDULER_URL")+"/schedule", bytes.NewBuffer(reqBody))
