@@ -288,14 +288,6 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	req, err := http.NewRequest(http.MethodPost, os.Getenv("SCHEDULER_URL")+"/schedule", bytes.NewBuffer(reqBody))
 	if err != nil {
-		// rollback migrations
-		query = fmt.Sprintf("DELETE FROM %s.schedule WHERE schedule_id = $1", tenantNamespace)
-		_, err = db.Connection.Exec(query, postScheduleId)
-		if err != nil {
-			logs.Logger.Info(err)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
 		logs.Logger.Info(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -305,8 +297,52 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	req.Header.Add("trace-id", traceId)
 	resp, err := client.Do(req)
 	if err != nil {
+		// rollback migrations
+		query = fmt.Sprintf("DELETE FROM %s.schedule WHERE schedule_id = $1", tenantNamespace)
+		_, err = db.Connection.Exec(query, postScheduleId)
+		if err != nil {
+			logs.Logger.Info(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		for _, postId := range postSchedule.PostIds {
+			query := fmt.Sprintf("UPDATE %s.post SET scheduled = $1 WHERE post_id = $2", tenantNamespace)
+			_, err = db.Connection.Exec(query, false, postId)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				logs.Logger.Info(err)
+				_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+					Data: pkg.Data{
+						Id:        "",
+						UiMessage: "Something went wrong. Contact admin",
+					},
+					Meta: pkg.Meta{
+						Timestamp:     time.Now(),
+						TransactionId: transactionId.String(),
+						TraceId:       traceId,
+						Status:        "FAILED",
+					},
+				})
+				return
+			}
+		}
+
 		logs.Logger.Info(err)
 		w.WriteHeader(http.StatusServiceUnavailable)
+		logs.Logger.Info(err)
+		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+			Data: pkg.Data{
+				Id:        "",
+				UiMessage: "Something went wrong. Contact admin",
+			},
+			Meta: pkg.Meta{
+				Timestamp:     time.Now(),
+				TransactionId: transactionId.String(),
+				TraceId:       traceId,
+				Status:        "FAILED",
+			},
+		})
 		return
 	}
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -357,7 +393,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	headers, err := pkg.ValidateHeaders(r)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Info(err)
+		logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -378,11 +414,11 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	tenantNamespace := headers["tenant-namespace"]
 
 	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
+	logs.Logger.Info(headers)
 
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Info("Invalid method")
+		logs.Logger.Error("Invalid method")
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -407,7 +443,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// TODO: send appropriate error message
 		w.WriteHeader(http.StatusInternalServerError)
-		logs.Logger.Info(err)
+		logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -424,30 +460,30 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create a post schedule instance
-	var post pkg.PostSchedule
-	var postList []pkg.PostSchedule
+	var schedules []pkg.PostSchedule
 	//loop through the schedules
 	for rows.Next() {
 		// Set the db values to the post schedules values
+		var schedule pkg.PostSchedule
 		err = rows.Scan(
-			&post.ScheduleId,
-			&post.ScheduleTitle,
-			&post.PostToFeed,
-			&post.From,
-			&post.To,
-			pq.Array(&post.PostIds),
-			&post.Duration,
-			&post.IsDue,
-			pq.Array(&post.Profiles.Facebook),
-			pq.Array(&post.Profiles.Twitter),
-			pq.Array(&post.Profiles.LinkedIn),
-			&post.CreatedOn,
-			&post.UpdatedOn,
+			&schedule.ScheduleId,
+			&schedule.ScheduleTitle,
+			&schedule.PostToFeed,
+			&schedule.From,
+			&schedule.To,
+			pq.Array(&schedule.PostIds),
+			&schedule.Duration,
+			pq.Array(&schedule.Profiles.Facebook),
+			pq.Array(&schedule.Profiles.Twitter),
+			pq.Array(&schedule.Profiles.LinkedIn),
+			&schedule.IsDue,
+			&schedule.CreatedOn,
+			&schedule.UpdatedOn,
 		)
 		if err != nil {
 			// TODO: Send an appropriate error message
 			w.WriteHeader(http.StatusInternalServerError)
-			logs.Logger.Info(err)
+			logs.Logger.Error(err)
 			_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 				Data: pkg.Data{
 					Id:        "",
@@ -463,12 +499,12 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		//	Build the post data list
-		postList = append(postList, post)
+		schedules = append(schedules, schedule)
 	}
 
 	//	If everything goes right build the response
-	response := pkg.FetchSchedulePostResponse{
-		Data: postList,
+	response := pkg.FetchSchedulePostResponse {
+		Data: schedules,
 		Meta: pkg.Meta{
 			Timestamp:     time.Now(),
 			TransactionId: transactionId.String(),
@@ -533,7 +569,7 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	tenantNamespace := headers["tenant-namespace"]
 
 	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
+	logs.Logger.Info(headers)
 
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -559,7 +595,6 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 
 	// Create Post instance to decode request object into
 	var post *pkg.PostSchedule
-
 	// Decode request body into the Post struct
 	err = json.Unmarshal(requestBody, &post)
 	if err != nil {
@@ -586,7 +621,7 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(postScheduleId)
 	uPostId, err := uuid.Parse(postScheduleId)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
 		logs.Logger.Info(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
@@ -609,6 +644,18 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	query := fmt.Sprintf("UPDATE %s.schedule SET schedule_title = $1, schedule_from = $2, schedule_to = $3, post_ids = $4, post_to_feed = $5, facebook = $6, twitter = $7, linked_in = $8 WHERE schedule_id = $9", tenantNamespace)
 	logs.Logger.Info(query)
 
+	if post.Profiles.Facebook == nil {
+		post.Profiles.Facebook = []string{}
+	}
+
+	if post.Profiles.Twitter == nil {
+		post.Profiles.Twitter = []string{}
+	}
+
+	if post.Profiles.LinkedIn == nil {
+		post.Profiles.LinkedIn = []string{}
+	}
+
 	_, err = db.Connection.Exec(
 		query,
 		post.ScheduleTitle,
@@ -623,10 +670,7 @@ func HandleUpdatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		_ = json.NewEncoder(w).Encode(struct {
-			Data pkg.Data `json:"data"`
-			Meta pkg.Meta `json:"meta"`
-		}{
+		_ = json.NewEncoder(w).Encode(pkg.StandardResponse {
 			Data: pkg.Data{
 				Id:        postScheduleId,
 				UiMessage: "Unable to Update post schedule",
