@@ -29,6 +29,6 @@ func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(health)
 	if err != nil {
-		logs.Logger.Error("Unlable to check health of server")
+		_ = logs.Logger.Error("unable to check health of server")
 	}
 }

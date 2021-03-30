@@ -20,7 +20,7 @@ type Object struct {
 	BbConnection *sql.DB
 }
 
-func (o Object) CreateResource(value interface{}) (int64, error) {
+func (o Object) CreateResource() (int64, error) {
 	tableProperties := o.Schema + "." + o.Table
 
 	// build primary values

@@ -1,4 +1,4 @@
-1616957472725645600 [Info] -----BEGIN PRIVATE KEY-----
+1617147218352508200 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,32 +26,5 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1616957472821650600 [Info] Connected to Postgres DB successfully
-1616957472872655600 [Info] Server running on port5379
-1616957475467438300 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjMzNTEzYi0xMDM2LTQyZTAtYjcxNi1lOWIxZmU2Y2VmNzAiLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjA5ODgxMDI0LCJpYXQiOjE2MDk4Nzk4MjR9.rpn9JfTw1eNMRMDfMv_bhUpbMclP7x_QF0TzPD05M0B9QlpjIeH2ApTcNKgaR6_6GwRBFW5_GBxlyx-NJuKXVA
-1616957475475438500 [Warn] check toke expiration time
-1616957475484439200 [Info] Token expired! getting a new one....
-1616957475519441400 [Info] refresh-token: 
-1616957475523440300 [Warn] About to get to validator
-1616957475525440200 [Info] Passed validator
-1616957475534441800 [Info] ===========================================
-1616957475537442200 [Info] Handling Update Post Schedule ...
-1616957475541442100 [Info] ===========================================
-1616957475550442700 [Info] map[tenant-namespace:postit trace-id:62e81570-6b78-4b85-9d10-83ca59554846]
-1616957475555442100 [Info] {
-	"schedule_title": "b Schedule",
-	"from": "2020-11-06T12:24:00.000Z",
-	"to": "2020-11-06T17:25:00.000Z",
-	"profiles": {
-		"facebook": ["243952730431775"],
-		"twitter": ["njfbnkfftgnklklgmf"]
-	},
-	"post_ids": [
-		"26ddbbee-c784-41b9-beb9-f38f6aa6c30c",
-		"d1a2bb70-616b-48a6-8aa8-aa58940b8df0",
-		"92b75c78-2fc8-47db-8c99-a7eb27334eb0"
-	]
-}
-1616957475558443400 [Info] a3882d09-a9d3-4bd0-bf8f-45da3096e0a6
-1616957475567445000 [Info] a3882d09-a9d3-4bd0-bf8f-45da3096e0a6
-1616957475570444500 [Info] UPDATE postit.schedule SET schedule_title = $1, schedule_from = $2, schedule_to = $3, post_ids = $4, post_to_feed = $5, facebook = $6, twitter = $7, linked_in = $8 WHERE schedule_id = $9
+1617147218536527000 [Info] Connected to Postgres DB successfully
+1617147218538527000 [Info] Server running on port5379

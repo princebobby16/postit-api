@@ -65,7 +65,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 				return
 			}
 
-			logs.Logger.Warn("check toke expiration time")
+			_ = logs.Logger.Warn("check toke expiration time")
 
 			//var newToken string
 			if jwtClaims.ExpiresAt.Time().Before(time.Now()) {
@@ -90,7 +90,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 				logs.Logger.Info("refresh-token: ", resp.Header.Get("refresh-token"))
 			}
 
-			logs.Logger.Warn("About to get to validator")
+			_ = logs.Logger.Warn("About to get to validator")
 			validator := jwt.NewValidator(
 				jwt.AudienceChecker(jwt.Audience{"postit-audience", r.Header.Get("tenant-namespace")}),
 			)

@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/gorilla/websocket"
 	"github.com/lib/pq"
-	"gitlab.com/pbobby001/postit-api/app/middlewares"
 	"gitlab.com/pbobby001/postit-api/db"
 	"gitlab.com/pbobby001/postit-api/pkg"
 	"gitlab.com/pbobby001/postit-api/pkg/logs"
@@ -150,10 +149,13 @@ func ScheduleStatus(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(webSocketHandshake)
 
 	// validate token
-	err = pkg.WebSocketTokenValidateToken(webSocketHandshake.AuthToken, middlewares.PrivateKey, webSocketHandshake.TenantNamespace)
+	err = pkg.WebSocketTokenValidateToken(webSocketHandshake.AuthToken, webSocketHandshake.TenantNamespace)
 	if err != nil {
-		logs.Logger.Error(err)
-		ws.Close()
+		_ = logs.Logger.Error(err)
+		 err = ws.Close()
+		if err != nil {
+			_ = logs.Logger.Error(err)
+		}
 		return
 	}
 	//q := `UPDATE postit.scheduled_post SET post_status = true WHERE post_id=$1`

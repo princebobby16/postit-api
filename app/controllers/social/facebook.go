@@ -250,7 +250,7 @@ func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(stmt)
 	_, err = db.Connection.Exec(stmt)
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 

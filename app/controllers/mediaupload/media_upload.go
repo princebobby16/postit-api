@@ -40,7 +40,7 @@ func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 
 	err = r.ParseMultipartForm(10 * MB)
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		w.WriteHeader(http.StatusRequestEntityTooLarge)
 		return
 	}
@@ -48,11 +48,17 @@ func HandleMediaUpload(w http.ResponseWriter, r *http.Request) {
 	file, handler, err := r.FormFile("media_file")
 	if err != nil {
 		logs.Logger.Info("Error Retrieving the File")
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	defer file.Close()
+	defer func() {
+		err = file.Close()
+		if err != nil {
+			_ = logs.Logger.Error(err)
+			return
+		}
+	}()
 
 	logs.Logger.Info("Uploaded File: ", handler.Filename)
 	logs.Logger.Info("File Size: ", handler.Size)
@@ -240,7 +246,7 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 
 	workingDir, err := os.Getwd()
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -250,7 +256,7 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(imageStoragePath)
 
 	if imageStoragePath == "" {
-		logs.Logger.Warn("No image has been uploaded to server")
+		_ = logs.Logger.Warn("No image has been uploaded to server")
 		w.WriteHeader(http.StatusGone)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
@@ -309,7 +315,7 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 
 	err = os.Remove(imageStoragePath + "/" + fileName)
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 
@@ -345,7 +351,7 @@ func DeleteUploadedFiles(w http.ResponseWriter, r *http.Request) {
 
 	workingDir, err := os.Getwd()
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -355,7 +361,7 @@ func DeleteUploadedFiles(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(imageStoragePath)
 
 	if imageStoragePath == "" {
-		logs.Logger.Warn("No image has been uploaded to server")
+		_ = logs.Logger.Warn("No image has been uploaded to server")
 		w.WriteHeader(http.StatusGone)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{

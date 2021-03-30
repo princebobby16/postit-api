@@ -349,7 +349,7 @@ func HandleCreatePostSchedule(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(string(body))
 
 	if resp.StatusCode != http.StatusOK {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		w.WriteHeader(http.StatusServiceUnavailable)
 		return
 	}
@@ -393,7 +393,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	headers, err := pkg.ValidateHeaders(r)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -418,7 +418,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Error("Invalid method")
+		_ = logs.Logger.Error("Invalid method")
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -443,7 +443,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// TODO: send appropriate error message
 		w.WriteHeader(http.StatusInternalServerError)
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        "",
@@ -483,7 +483,7 @@ func HandleFetchPostSchedule(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			// TODO: Send an appropriate error message
 			w.WriteHeader(http.StatusInternalServerError)
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 				Data: pkg.Data{
 					Id:        "",

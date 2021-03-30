@@ -18,7 +18,7 @@ func EmailNotificationService(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        uuid.NewV4().String(),
@@ -38,7 +38,7 @@ func EmailNotificationService(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(body, &emailRequest)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 			Data: pkg.Data{
 				Id:        uuid.NewV4().String(),
@@ -56,11 +56,11 @@ func EmailNotificationService(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(emailRequest)
 	retry, err := pkg.SendEmail(emailRequest)
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		if retry {
 			_, err = pkg.SendEmail(emailRequest)
 			w.WriteHeader(http.StatusInternalServerError)
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
 				Data: pkg.Data{
 					Id:        uuid.NewV4().String(),

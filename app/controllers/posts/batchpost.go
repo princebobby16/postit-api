@@ -37,7 +37,7 @@ func HandleBatchPost(w http.ResponseWriter, r *http.Request) {
 				Status:        "FAILED",
 			},
 		})
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 
@@ -59,7 +59,7 @@ func HandleBatchPost(w http.ResponseWriter, r *http.Request) {
 				Status:        "FAILED",
 			},
 		})
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 
@@ -80,7 +80,7 @@ func HandleBatchPost(w http.ResponseWriter, r *http.Request) {
 				Status:        "FAILED",
 			},
 		})
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 	// Generate an id for the post
@@ -110,7 +110,7 @@ func HandleBatchPost(w http.ResponseWriter, r *http.Request) {
 					Status:        "FAILED",
 				},
 			})
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 	}

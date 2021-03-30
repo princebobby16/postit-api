@@ -15,7 +15,7 @@ type EmojiPackage struct {
 	EnclosedCharacters []string `json:"enclosed_characters"`
 }
 
-func HandleGetEmoji(w http.ResponseWriter, r *http.Request) {
+func HandleGetEmoji(w http.ResponseWriter, _ *http.Request) {
 
 	var emojiPackage EmojiPackage
 

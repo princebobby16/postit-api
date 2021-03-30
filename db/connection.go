@@ -32,7 +32,7 @@ func Disconnect() {
 	logs.Logger.Info("Attempting to disconnect from db....")
 	err := Connection.Close()
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 	}
 	logs.Logger.Info("Disconnected from db successfully...")
 }

@@ -62,7 +62,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	wd, err := os.Getwd()
 	if err != nil {
-		logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		return
 	}
 
@@ -72,9 +72,9 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 	fileInfo, err := ioutil.ReadDir(path)
 	if err != nil {
 		if os.IsNotExist(err){
-			logs.Logger.Warn(err)
+			_ = logs.Logger.Warn(err)
 		} else {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 	}
@@ -95,21 +95,25 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 			openImage, err := os.Open(fileLocation)
 			if err != nil {
-				logs.Logger.Error(err)
+				_ = logs.Logger.Error(err)
 				return
 			}
 
 			imageBytes, err = ioutil.ReadAll(openImage)
 			if err != nil {
-				logs.Logger.Error(err)
+				_ = logs.Logger.Error(err)
 				return
 			}
-			_ = openImage.Close()
+			err = openImage.Close()
+			if err != nil {
+				_ = logs.Logger.Error(err)
+				return
+			}
 			images = append(images, imageBytes)
 
 			jsonFile, err := os.Open(filepath.Join(path, "f.json"))
 			if err != nil {
-				logs.Logger.Error(err)
+				_ = logs.Logger.Error(err)
 				return
 			}
 
@@ -161,7 +165,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		err = os.RemoveAll(path)
 		if err != nil {
-			logs.Logger.Error(err)
+			_ = logs.Logger.Error(err)
 			return
 		}
 	}()
@@ -209,7 +213,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: refactor fetch post to send images as well
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 1000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection

@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-type p struct {
-	Pass string 		`json:"pass"`
-}
-
 func EndPointForTests(w http.ResponseWriter, r *http.Request) {
 	//var password p
 	//err := json.NewDecoder(r.Body).Decode(&password)

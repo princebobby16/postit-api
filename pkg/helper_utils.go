@@ -35,7 +35,7 @@ func ValidateHeaders(r *http.Request) (map[string]string, error) {
 		} else if value == "" {
 			return nil, errors.New("Required header: " + header + " not found")
 		} else {
-			return nil, errors.New("No headers received be sure to send some headers")
+			return nil, errors.New("no headers received be sure to send some headers")
 		}
 	}
 
@@ -75,12 +75,6 @@ func SendEmail(req EmailRequest) (bool, error) {
 	var body bytes.Buffer
 
 	body.Write(headers)
-
-	//m := gomail.NewMessage()
-	//m.SetHeader("From", from)
-	//m.SetHeader("To", to[1])
-	//m.SetHeader("Subject", subject+mime)
-	//m.SetBody()
 
 	// Authentication.
 	auth := smtp.PlainAuth("", from, password, smtpServer.host)
@@ -179,13 +173,13 @@ func GenerateDurationForEachPost(schedule PostSchedule) float64 {
 /* Helper func to handle error */
 func SendErrorResponse(w http.ResponseWriter, tId uuid.UUID, traceId string, err error, httpStatus int) {
 	w.WriteHeader(httpStatus)
-	logs.Logger.Error(err)
+	_ = logs.Logger.Error(err)
 	_ = json.NewEncoder(w).Encode(StandardResponse {
-		Data: Data{
+		Data: Data {
 			Id:        "",
 			UiMessage: "Something went wrong! Contact Admin!",
 		},
-		Meta: Meta{
+		Meta: Meta {
 			Timestamp:     time.Now(),
 			TransactionId: tId.String(),
 			TraceId:       traceId,
@@ -195,7 +189,7 @@ func SendErrorResponse(w http.ResponseWriter, tId uuid.UUID, traceId string, err
 	return
 }
 
-func WebSocketTokenValidateToken(tokenString string, PrivateKey []byte, tenantNamespace string) error {
+func WebSocketTokenValidateToken(tokenString string, tenantNamespace string) error {
 	logs.Logger.Info(tokenString)
 	logs.Logger.Info(tenantNamespace)
 
