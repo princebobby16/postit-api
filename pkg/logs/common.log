@@ -28,3 +28,17 @@ xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 
 1617147218536527000 [Info] Connected to Postgres DB successfully
 1617147218538527000 [Info] Server running on port5379
+1617147249617160900 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhNDBlNWNmNC0wMTc2LTQ0ZjYtYjI0ZC0zNTRhZTJlMzc3OTMiLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjE1NTA2NzE0LCJpYXQiOjE2MTU1MDU1MTR9.ebW7sYLSeWBWEddpz6M3PE8-8UkszDeE30ijKWI1-uroCdtiQ3uyyPfBebbS6VR1qPAIMqGML9kK0KEhgbq3cA
+1617147249618160000 [Warn] check toke expiration time
+1617147249619160900 [Info] Token expired! getting a new one....
+1617147249677164100 [Info] refresh-token: 
+1617147249677164100 [Warn] About to get to validator
+1617147249678164100 [Info] Passed validator
+1617147249678164100 [Info] ===========================================
+1617147249678164100 [Info] Handling Fetch post ...
+1617147249679162700 [Info] ===========================================
+1617147249679162700 [Info] Headers => TraceId: %s, TenantNamespace: %sbde4de63-0cae-4cb4-8dbf-03e42fd704bbpostit
+1617147249679162700 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
+1617147249735164100 [Info] Grow with Digital
+1617147324777834700 [Warn] http: Server closed
+1617147325278032800 [Warn] shutting down

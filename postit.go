@@ -25,7 +25,7 @@ func main() {
 
 	r := router.InitRoutes()
 
-	origins := handlers.AllowedOrigins([]string{ /*"https://postit-ui.herokuapp.com"*/ "*", "http://localhost:8080"})
+	origins := handlers.AllowedOrigins([]string{ /*"https://postit-ui.herokuapp.com"*/ "*", "http://localhost:8080", "postit-ui.herokuapp.com"})
 	headers := handlers.AllowedHeaders([]string{
 		"Content-Type",
 		"Content-Length",
@@ -35,9 +35,9 @@ func main() {
 		"Accept",
 		"Authorization",
 		"User-Agent",
+		"Access-Control-Allow-Origin",
 		"tenant-namespace",
 		"trace-id",
-		"Access-Control-Allow-Origin",
 	})
 	methods := handlers.AllowedMethods([]string{
 		http.MethodPost,
