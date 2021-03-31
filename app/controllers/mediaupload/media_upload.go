@@ -120,7 +120,7 @@ func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, filena
 			}
 		}
 
-		jsonFileToBeCreated := join + "\\f.json"
+		jsonFileToBeCreated := join + "/f.json"
 
 		if _, err := os.Stat(jsonFileToBeCreated); os.IsNotExist(err) {
 			logs.Logger.Info("File doesnt Exist creating")
@@ -133,7 +133,7 @@ func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, filena
 
 			// create a map format for storing the file info
 			fileData := make(map[string]string)
-			fileData[filename] = join + "\\" + filename
+			fileData[filename] = join + "/" + filename
 
 			// encode the file info to json bytes
 			jsonFileData, err := json.Marshal(fileData)
@@ -170,7 +170,7 @@ func parseMultipartToFile(fileChannel <-chan multipart.File, nmsp string, filena
 				return
 			}
 			// create a map format for storing the file info
-			fileData[filename] = join + "\\" + filename
+			fileData[filename] = join + "/" + filename
 			logs.Logger.Info(fileData)
 
 			// encode the file info to json bytes
@@ -273,7 +273,7 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsFile, err := os.OpenFile(imageStoragePath + "\\f.json", os.O_RDWR, 0644)
+	jsFile, err := os.OpenFile(imageStoragePath + "/f.json", os.O_RDWR, 0644)
 	if err != nil {
 		_ = logs.Logger.Error(err)
 		return
@@ -302,7 +302,7 @@ func HandleCancelMediaUpload(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(string(jsonFileData))
 
 	// write the json bytes to the json file created
-	err = ioutil.WriteFile(imageStoragePath + "\\f.json", jsonFileData, 0644)
+	err = ioutil.WriteFile(imageStoragePath + "/f.json", jsonFileData, 0644)
 	if err != nil {
 		_ = logs.Logger.Error(err)
 		return

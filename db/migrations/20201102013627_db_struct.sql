@@ -57,8 +57,6 @@ CREATE TABLE IF NOT EXISTS postit.application_info
 
 -- +goose Down
 DROP TABLE IF EXISTS postit.post;
-DROP TABLE IF EXISTS postit.current_schedule;
-DROP TABLE IF EXISTS postit.scheduled_post;
 DROP TABLE IF EXISTS postit.application_info;
 DROP TABLE IF EXISTS postit.schedule;
 DROP SCHEMA IF EXISTS postit CASCADE;
