@@ -1,4 +1,4 @@
-1617147218352508200 [Info] -----BEGIN PRIVATE KEY-----
+1617398803377982800 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,19 +26,19 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1617147218536527000 [Info] Connected to Postgres DB successfully
-1617147218538527000 [Info] Server running on port5379
-1617147249617160900 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhNDBlNWNmNC0wMTc2LTQ0ZjYtYjI0ZC0zNTRhZTJlMzc3OTMiLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjE1NTA2NzE0LCJpYXQiOjE2MTU1MDU1MTR9.ebW7sYLSeWBWEddpz6M3PE8-8UkszDeE30ijKWI1-uroCdtiQ3uyyPfBebbS6VR1qPAIMqGML9kK0KEhgbq3cA
-1617147249618160000 [Warn] check toke expiration time
-1617147249619160900 [Info] Token expired! getting a new one....
-1617147249677164100 [Info] refresh-token: 
-1617147249677164100 [Warn] About to get to validator
-1617147249678164100 [Info] Passed validator
-1617147249678164100 [Info] ===========================================
-1617147249678164100 [Info] Handling Fetch post ...
-1617147249679162700 [Info] ===========================================
-1617147249679162700 [Info] Headers => TraceId: %s, TenantNamespace: %sbde4de63-0cae-4cb4-8dbf-03e42fd704bbpostit
-1617147249679162700 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617147249735164100 [Info] Grow with Digital
-1617147324777834700 [Warn] http: Server closed
-1617147325278032800 [Warn] shutting down
+1617398803513991100 [Info] Connected to Postgres DB successfully
+1617398803517991000 [Info] Server running on port5379
+1617398821464458400 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMjkxNGY0MC1hYzdiLTRjNjAtYTNhZi1jMWUxY2JhODhmYTciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjA4MzExNDk5LCJpYXQiOjE2MDgzMTAyOTl9.XDnfvK1nzBjx8Zv3dr8HLUIpSA5EAwa--2W4PKgt_U0UA1dJt_IkaQsQhCmzUnUil8kU4_Z43-yuA_N8C9qOgg
+1617398821508460300 [Warn] check toke expiration time
+1617398821509459800 [Info] Token expired! getting a new one....
+1617398821518459900 [Info] refresh-token: 
+1617398821527461100 [Warn] About to get to validator
+1617398821527461100 [Info] Passed validator
+1617398821548479500 [Info] Headers => TraceId: f8ad1639-e945-4b38-a574-b9aa70cd0ebe, TenantNamespace: postit
+1617400201246503600 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
+1617400202280560800 [Warn] check toke expiration time
+1617400202409568900 [Info] Token expired! getting a new one....
+1617400203664641500 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzQwMTQwMywianRpIjoiMTE4NzFkMmMtNDhjZC00MThjLTg3NmItODdhN2E2NjFkM2ViIiwiaWF0IjoxNjE3NDAwMjAzLCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
+1617400203930656400 [Warn] About to get to validator
+1617400204093664700 [Info] Passed validator
+1617400204238675100 [Info] Headers => TraceId: b896136b-51f3-41f7-a7af-b56d72c4c48d, TenantNamespace: postit

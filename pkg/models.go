@@ -2,39 +2,71 @@ package pkg
 
 import (
 	"github.com/gorilla/websocket"
+	"github.com/twinj/uuid"
 	"time"
 )
 
 type (
+	PostitUserData struct {
+		FacebookPostitUserData []FacebookPostitUserData `json:"facebook_postit_user_data"`
+		TwitterPostitUserData  []TwitterPostitUserData  `json:"twitter_postit_user_data"`
+		LinkedInPostitUserData []LinkedInPostitUserData `json:"linked_in_postit_user_data"`
+	}
+
+	ApplicationInfo struct {
+		ApplicationUuid   uuid.UUID
+		ApplicationName   string
+		ApplicationId     string
+		ApplicationSecret string
+		ApplicationUrl    string
+		UserAccessToken   string
+		ExpiresIn         string
+		UserId            string
+		UserName          string
+		CreatedAt         time.Time
+		UpdatedAt         time.Time
+	}
+
+	TwitterPostitUserData struct {
+		Username    string `json:"username"`
+		UserId      string `json:"user_id"`
+		AccessToken string `json:"access_token"`
+	}
+
+	LinkedInPostitUserData struct {
+		Username    string `json:"username"`
+		UserId      string `json:"user_id"`
+		AccessToken string `json:"access_token"`
+	}
 
 	FacebookPostitUserData struct {
-		Username string 			`json:"username"`
-		UserId string 				`json:"user_id"`
-		AccessToken string 			`json:"access_token"`
+		Username    string `json:"username"`
+		UserId      string `json:"user_id"`
+		AccessToken string `json:"access_token"`
 	}
 
 	WebSocketHandShakeData struct {
-		TenantNamespace string		`json:"tenant_namespace"`
-		AuthToken string 			`json:"auth_token"`
+		TenantNamespace string `json:"tenant_namespace"`
+		AuthToken       string `json:"auth_token"`
 	}
 
 	CountResponse struct {
-		PostCount int 			`json:"post_count"`
-		ScheduleCount int 		`json:"schedule_count"`
-		AccountCount int 		`json:"account_count"`
-		Meta Meta 				`json:"meta"`
+		PostCount     int  `json:"post_count"`
+		ScheduleCount int  `json:"schedule_count"`
+		AccountCount  int  `json:"account_count"`
+		Meta          Meta `json:"meta"`
 	}
 
 	ScheduleStatus struct {
-		ScheduleId string 		`json:"schedule_id"`
-		ScheduleTitle string 	`json:"schedule_title"`
-		From time.Time 			`json:"from"`
-		To time.Time 			`json:"to"`
-		TotalPost int 			`json:"total_post"`
-		Posts []ScheduledPost    `json:"posts"`
-		PostCount int          `json:"post_count"`
-		CreatedAt time.Time    `json:"created_at"`
-		UpdatedAt time.Time    `json:"updated_at"`
+		ScheduleId    string          `json:"schedule_id"`
+		ScheduleTitle string          `json:"schedule_title"`
+		From          time.Time       `json:"from"`
+		To            time.Time       `json:"to"`
+		TotalPost     int             `json:"total_post"`
+		Posts         []ScheduledPost `json:"posts"`
+		PostCount     int             `json:"post_count"`
+		CreatedAt     time.Time       `json:"created_at"`
+		UpdatedAt     time.Time       `json:"updated_at"`
 	}
 
 	Client struct {
@@ -85,7 +117,7 @@ type (
 		PostId       string    `json:"post_id"`
 		PostMessage  string    `json:"post_message"`
 		PostImages   [][]byte  `json:"post_image"`
-		ImagePaths 	 []string  `json:"image_paths"`
+		ImagePaths   []string  `json:"image_paths"`
 		HashTags     []string  `json:"hash_tags"`
 		PostStatus   bool      `json:"post_status"`
 		PostPriority bool      `json:"post_priority"`
@@ -105,23 +137,23 @@ type (
 	}
 
 	SocialMediaProfiles struct {
-		Facebook []string 			`json:"facebook"`
-		Twitter []string 			`json:"twitter"`
-		LinkedIn []string 			`json:"linked_in"`
+		Facebook []string `json:"facebook"`
+		Twitter  []string `json:"twitter"`
+		LinkedIn []string `json:"linked_in"`
 	}
 
 	PostSchedule struct {
-		ScheduleId    string    `json:"schedule_id"`
-		ScheduleTitle string    `json:"schedule_title"`
-		PostToFeed    bool      `json:"post_to_feed"`
-		From          time.Time `json:"from"`
-		To            time.Time `json:"to"`
-		PostIds       []string  `json:"post_ids"`
-		Duration      float64   `json:"duration"`
-		IsDue         bool      `json:"is_due"`
-		Profiles SocialMediaProfiles `json:"profiles"`
-		CreatedOn     time.Time `json:"created_on"`
-		UpdatedOn     time.Time `json:"updated_on"`
+		ScheduleId    string              `json:"schedule_id"`
+		ScheduleTitle string              `json:"schedule_title"`
+		PostToFeed    bool                `json:"post_to_feed"`
+		From          time.Time           `json:"from"`
+		To            time.Time           `json:"to"`
+		PostIds       []string            `json:"post_ids"`
+		Duration      float64             `json:"duration"`
+		IsDue         bool                `json:"is_due"`
+		Profiles      SocialMediaProfiles `json:"profiles"`
+		CreatedOn     time.Time           `json:"created_on"`
+		UpdatedOn     time.Time           `json:"updated_on"`
 	}
 
 	FetchPostResponse struct {
@@ -141,12 +173,12 @@ type (
 
 	DbPost struct {
 		PostId         string    `json:"post_id"`
-		FacebookPostId string	 `json:"facebook_post_id"`
+		FacebookPostId string    `json:"facebook_post_id"`
 		PostMessage    string    `json:"post_message"`
-		PostImages 	   [][]byte `json:"post_images"`
+		PostImages     [][]byte  `json:"post_images"`
 		ImagePaths     []string  `json:"image_paths"`
 		HashTags       []string  `json:"hash_tags"`
-		Scheduled  	   bool		`json:"scheduled"`
+		Scheduled      bool      `json:"scheduled"`
 		PostStatus     bool      `json:"post_status"`
 		PostPriority   bool      `json:"post_priority"`
 		CreatedOn      time.Time `json:"created_on"`

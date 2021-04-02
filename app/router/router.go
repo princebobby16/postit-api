@@ -130,9 +130,9 @@ func InitRoutes() *mux.Router {
 		},
 		Route{
 			Name:    "Fetch Facebook Code",
-			Path:    "/fb/code",
+			Path:    "/all/code",
 			Method:  http.MethodGet,
-			Handler: social.HandleFetchFacebookEmailData,
+			Handler: social.AllAccounts,
 		},
 
 		// websockets

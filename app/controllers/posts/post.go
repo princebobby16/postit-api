@@ -224,11 +224,11 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create a post instance
-	var post pkg.DbPost
 	var postList []pkg.DbPost
 	//loop through the posts
 	//if rows.Next() {
 	for rows.Next() {
+		var post pkg.DbPost
 		// Set the db values to the post values
 		err = rows.Scan(
 			&post.PostId,
@@ -253,6 +253,10 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 		}
 		if post.PostImages == nil {
 			post.PostImages = [][]byte{}
+		}
+
+		if post.HashTags == nil {
+			post.HashTags = []string{}
 		}
 		//	Build the post data list
 		postList = append(postList, post)

@@ -8,7 +8,6 @@ import (
 	"gitlab.com/pbobby001/postit-api/pkg"
 	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -165,62 +164,6 @@ func HandleFacebookCode (w http.ResponseWriter, r *http.Request) {
 			Status:        "SUCCESS",
 		},
 	})
-
-}
-
-func HandleFetchFacebookEmailData (w http.ResponseWriter, r *http.Request) {
-	transactionId := uuid.NewV4()
-
-	headers, err := pkg.ValidateHeaders(r)
-	if err != nil {
-		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusBadRequest)
-		return
-	}
-
-	//Get the relevant headers
-	traceId := headers["trace-id"]
-	tenantNamespace := headers["tenant-namespace"]
-
-	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: "+ traceId +", TenantNamespace: "+tenantNamespace)
-
-	query := fmt.Sprintf("SELECT user_name, user_id, user_access_token FROM %s.application_info ORDER BY updated_at DESC LIMIT 2000", tenantNamespace)
-	log.Println(query)
-	rows, err := db.Connection.Query(query)
-	if err != nil {
-		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusBadRequest)
-		return
-	}
-
-	var fbData []pkg.FacebookPostitUserData
-	for rows.Next() {
-		var fb pkg.FacebookPostitUserData
-		err = rows.Scan(&fb.Username, &fb.UserId, &fb.AccessToken)
-		if err != nil {
-			pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusBadRequest)
-			return
-		}
-
-		fbData = append(fbData, fb)
-	}
-
-	if fbData == nil {
-		fbData = []pkg.FacebookPostitUserData{}
-	}
-
-	resp := struct {
-		Data []pkg.FacebookPostitUserData 			`json:"data"`
-		Meta pkg.Meta								`json:"meta"`
-	}{
-		Data: fbData,
-		Meta: pkg.Meta{
-			Timestamp:     time.Now(),
-			TransactionId: transactionId.String(),
-			TraceId:       traceId,
-			Status:        "SUCCESS",
-		},
-	}
-	_ = json.NewEncoder(w).Encode(resp)
 }
 
 func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
@@ -254,11 +197,11 @@ func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_ = json.NewEncoder(w).Encode(struct {
-		Message string 		`json:"message"`
-		Meta pkg.Meta 		`json:"meta"`
-	}{
-		Message: "Code Deleted",
+	_ = json.NewEncoder(w).Encode(pkg.StandardResponse {
+		Data: pkg.Data {
+			Id: "",
+			UiMessage: "Code Deleted",
+		},
 		Meta: pkg.Meta{
 			Timestamp:     time.Now(),
 			TransactionId: transactionId.String(),
