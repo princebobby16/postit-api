@@ -129,9 +129,9 @@ func GenerateHashTags(hashT []string) []string {
 
 /* Helper function to create post */
 func CreatePost(post Post, tenantNamespace string, postId uuid.UUID) error {
-	query := fmt.Sprintf("INSERT INTO %s.post (post_id, post_message, post_image, image_extension, hash_tags, post_priority, post_status) VALUES ($1, $2, $3, $4, $5, $6, $7)", tenantNamespace)
+	query := fmt.Sprintf("INSERT INTO %s.post (post_id, post_message, post_image, image_extension, hash_tags, post_priority) VALUES ($1, $2, $3, $4, $5, $6)", tenantNamespace)
 	if post.PostImage == nil {
-		_, err := db.Connection.Exec(query, postId.String(), &post.PostMessage, []byte{}, "", pq.Array(&post.HashTags), &post.PostPriority, &post.PostStatus)
+		_, err := db.Connection.Exec(query, postId.String(), &post.PostMessage, []byte{}, "", pq.Array(&post.HashTags), &post.PostPriority)
 		if err != nil {
 			return err
 		}
@@ -148,7 +148,7 @@ func CreatePost(post Post, tenantNamespace string, postId uuid.UUID) error {
 			imageExtension = ".jpg"
 		}
 
-		_, err := db.Connection.Exec(query, postId.String(), &post.PostMessage, &post.PostImage, imageExtension, pq.Array(&post.HashTags), &post.PostPriority, &post.PostStatus)
+		_, err := db.Connection.Exec(query, postId.String(), &post.PostMessage, &post.PostImage, imageExtension, pq.Array(&post.HashTags), &post.PostPriority)
 		if err != nil {
 			// db error
 			return err
@@ -174,12 +174,12 @@ func GenerateDurationForEachPost(schedule PostSchedule) float64 {
 func SendErrorResponse(w http.ResponseWriter, tId uuid.UUID, traceId string, err error, httpStatus int) {
 	w.WriteHeader(httpStatus)
 	_ = logs.Logger.Error(err)
-	_ = json.NewEncoder(w).Encode(StandardResponse {
-		Data: Data {
+	_ = json.NewEncoder(w).Encode(StandardResponse{
+		Data: Data{
 			Id:        "",
 			UiMessage: "Something went wrong! Contact Admin!",
 		},
-		Meta: Meta {
+		Meta: Meta{
 			Timestamp:     time.Now(),
 			TransactionId: tId.String(),
 			TraceId:       traceId,

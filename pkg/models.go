@@ -130,7 +130,6 @@ type (
 		PostMessage  string    `json:"post_message"`
 		PostImage    []byte    `json:"post_image"`
 		HashTags     []string  `json:"hash_tags"`
-		PostStatus   bool      `json:"post_status"`
 		PostPriority bool      `json:"post_priority"`
 		CreatedOn    time.Time `json:"created_on"`
 		UpdatedOn    time.Time `json:"updated_on"`
@@ -179,7 +178,9 @@ type (
 		ImagePaths     []string  `json:"image_paths"`
 		HashTags       []string  `json:"hash_tags"`
 		Scheduled      bool      `json:"scheduled"`
-		PostStatus     bool      `json:"post_status"`
+		PostFbStatus   bool      `json:"post_fb_status"`
+		PostTwStatus   bool      `json:"post_tw_status"`
+		PostLiStatus   bool      `json:"post_li_status"`
 		PostPriority   bool      `json:"post_priority"`
 		CreatedOn      time.Time `json:"created_on"`
 		UpdatedOn      time.Time `json:"updated_on"`

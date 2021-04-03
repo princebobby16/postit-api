@@ -1,4 +1,4 @@
-1617398803377982800 [Info] -----BEGIN PRIVATE KEY-----
+1617484618594607400 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,19 +26,26 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1617398803513991100 [Info] Connected to Postgres DB successfully
-1617398803517991000 [Info] Server running on port5379
-1617398821464458400 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjMjkxNGY0MC1hYzdiLTRjNjAtYTNhZi1jMWUxY2JhODhmYTciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjA4MzExNDk5LCJpYXQiOjE2MDgzMTAyOTl9.XDnfvK1nzBjx8Zv3dr8HLUIpSA5EAwa--2W4PKgt_U0UA1dJt_IkaQsQhCmzUnUil8kU4_Z43-yuA_N8C9qOgg
-1617398821508460300 [Warn] check toke expiration time
-1617398821509459800 [Info] Token expired! getting a new one....
-1617398821518459900 [Info] refresh-token: 
-1617398821527461100 [Warn] About to get to validator
-1617398821527461100 [Info] Passed validator
-1617398821548479500 [Info] Headers => TraceId: f8ad1639-e945-4b38-a574-b9aa70cd0ebe, TenantNamespace: postit
-1617400201246503600 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
-1617400202280560800 [Warn] check toke expiration time
-1617400202409568900 [Info] Token expired! getting a new one....
-1617400203664641500 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzQwMTQwMywianRpIjoiMTE4NzFkMmMtNDhjZC00MThjLTg3NmItODdhN2E2NjFkM2ViIiwiaWF0IjoxNjE3NDAwMjAzLCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
-1617400203930656400 [Warn] About to get to validator
-1617400204093664700 [Info] Passed validator
-1617400204238675100 [Info] Headers => TraceId: b896136b-51f3-41f7-a7af-b56d72c4c48d, TenantNamespace: postit
+1617484618973629000 [Info] Connected to Postgres DB successfully
+1617484618974630800 [Info] Server running on port5379
+1617484626387187000 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDIxOThlOC03ZDQ4LTQ3ZTUtOTA3Yy1kOGMxNTE2NWMxNDciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjEyMjA4MTA1LCJpYXQiOjE2MTIyMDY5MDV9.Dz18XgfMP-XE4oRes5jmqUQJlkNEBw-SdEHnHJ3eBoDH3W555yiceSsWG1gd3VsXORKLGRHT6FNdbWBl5Yng6Q
+1617484626394190500 [Warn] check toke expiration time
+1617484626395190500 [Info] Token expired! getting a new one....
+1617484626453193800 [Info] refresh-token: 
+1617484626454194700 [Warn] About to get to validator
+1617484626454194700 [Info] Passed validator
+1617484626459194100 [Info] ===========================================
+1617484626459194100 [Info] Handling Update Post ...
+1617484626459194100 [Info] ===========================================
+1617484626459194100 [Info] Headers => TraceId: %s, TenantNamespace: %sd6d8c06d-0473-4dca-a352-468d507d77e7postit
+1617484626460193600 [Info] {
+	"post_message": "Wow with Digital",
+	"hash_tags": ["GrowWithShiftr", "JoinTheMovement"],
+	"post_priority": false
+}
+1617484626460193600 [Info] [#GrowWithShiftr #JoinTheMovement]
+1617484626460193600 [Info] 46f73a81-460f-4c19-9373-1d6c49523513
+1617484626461194000 [Info] 46f73a81-460f-4c19-9373-1d6c49523513
+1617484626461194000 [Info] UPDATE postit.post SET post_message = $1, hash_tags = $2, post_priority = $3 WHERE post_id = $4
+1617484662823851600 [Warn] http: Server closed
+1617484663323934700 [Warn] shutting down

@@ -59,7 +59,6 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
 	wd, err := os.Getwd()
 	if err != nil {
 		_ = logs.Logger.Error(err)
@@ -71,7 +70,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	fileInfo, err := ioutil.ReadDir(path)
 	if err != nil {
-		if os.IsNotExist(err){
+		if os.IsNotExist(err) {
 			_ = logs.Logger.Warn(err)
 		} else {
 			_ = logs.Logger.Error(err)
@@ -87,7 +86,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		for _, file := range fileInfo {
 			logs.Logger.Info(file.Name())
 
-			if file.Name() == "f.json"{
+			if file.Name() == "f.json" {
 				continue
 			}
 
@@ -153,10 +152,10 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Build and use a crud service
 	//build query
-	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_status, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", tenantNamespace)
+	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
 	logs.Logger.Info("Db Query: ", query)
 
-	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostStatus, post.PostPriority, false)
+	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostPriority, false)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
 		return
@@ -213,7 +212,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: refactor fetch post to send images as well
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 1000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_fb_status, post_tw_status, post_li_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 1000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
@@ -237,7 +236,9 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			pq.Array(&post.PostImages),
 			pq.Array(&post.ImagePaths),
 			pq.Array(&post.HashTags),
-			&post.PostStatus,
+			&post.PostFbStatus,
+			&post.PostTwStatus,
+			&post.PostLiStatus,
 			&post.PostPriority,
 			&post.Scheduled,
 			&post.CreatedOn,
@@ -347,16 +348,16 @@ func HandleUpdatePost(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info(uPostId)
 
 	//TODO: Validate post uuid
-	query := fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_status = $3, post_priority = $4 WHERE post_id = $5", tenantNamespace)
+	query := fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3 WHERE post_id = $4", tenantNamespace)
 	logs.Logger.Info(query)
 
-	_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostStatus, post.PostPriority, uPostId)
+	_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, uPostId)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
 		return
 	}
 
-	response := &pkg.StandardResponse {
+	response := &pkg.StandardResponse{
 		Data: pkg.Data{
 			Id:        postId,
 			UiMessage: "Post Updated!",
