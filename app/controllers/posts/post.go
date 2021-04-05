@@ -140,6 +140,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// imagePaths
 	logs.Logger.Info(imagePaths)
 
 	// Generate hashtag list
@@ -152,10 +153,10 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Build and use a crud service
 	//build query
-	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", tenantNamespace)
+	query := fmt.Sprintf("INSERT INTO %s.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", tenantNamespace)
 	logs.Logger.Info("Db Query: ", query)
 
-	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), post.PostPriority, false)
+	result, err := db.Connection.Exec(query, id.String(), "", post.PostMessage, pq.Array(images), pq.Array(imagePaths), pq.Array(post.HashTags), false, false, false, post.PostPriority, false)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
 		return
@@ -212,7 +213,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: refactor fetch post to send images as well
 	// Build the sql query
-	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_priority, post_fb_status, post_tw_status, post_li_status, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 1000", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM %s.post ORDER BY updated_at DESC LIMIT 1000", tenantNamespace)
 	logs.Logger.Info(query)
 
 	// Run the query on the db using that particular db connection
@@ -249,24 +250,28 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if post.ImagePaths == nil {
+		if post.ImagePaths == nil || len(post.ImagePaths) == 0 {
 			post.ImagePaths = []string{}
 		}
-		if post.PostImages == nil {
+
+		if post.PostImages == nil || len(post.PostImages) == 0 {
 			post.PostImages = [][]byte{}
 		}
 
-		if post.HashTags == nil {
+		if post.HashTags == nil || len(post.HashTags) == 0 {
 			post.HashTags = []string{}
 		}
 		//	Build the post data list
 		postList = append(postList, post)
 	}
 	// Generate an id for this particular transaction
+	logs.Logger.Info(postList)
 
-	if postList == nil {
+	if postList == nil || len(postList) == 0 {
 		postList = []pkg.DbPost{}
 	}
+
+	logs.Logger.Info(postList)
 
 	//	If everything goes right build the response
 	response := pkg.FetchPostResponse{
@@ -278,7 +283,6 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 			Status:        "SUCCESS",
 		},
 	}
-	logs.Logger.Info(response.Data[0].PostMessage)
 
 	w.WriteHeader(http.StatusFound)
 	err = json.NewEncoder(w).Encode(&response)
