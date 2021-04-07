@@ -105,6 +105,7 @@ func JWTMiddleware(next http.Handler) http.Handler {
 
 			logs.Logger.Info("Passed validator")
 
+			logs.Logger.Info(r.URL.Path)
 			next.ServeHTTP(w, r)
 		}
 	})
