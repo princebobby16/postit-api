@@ -87,6 +87,10 @@ func JWTMiddleware(next http.Handler) http.Handler {
 					return
 				}
 
+				if resp.StatusCode != http.StatusOK {
+					w.WriteHeader(http.StatusUnauthorized)
+					return
+				}
 				logs.Logger.Info("refresh-token: ", resp.Header.Get("refresh-token"))
 			}
 
