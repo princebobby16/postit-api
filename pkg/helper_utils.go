@@ -11,6 +11,7 @@ import (
 	"gitlab.com/pbobby001/postit-api/db"
 	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/smtp"
@@ -67,7 +68,6 @@ func SendEmail(req EmailRequest) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	logs.Logger.Info(emailBody)
 
 	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
 	subject := "Subject: " + "Message From Shiftr Gh Website" + "!\n"
@@ -92,7 +92,7 @@ func SendEmail(req EmailRequest) (bool, error) {
 
 func parseTemplate(s string, req EmailRequest) ([]byte, error) {
 
-	path, err := filepath.Abs(fmt.Sprintf("cmd/postit/pkg/12/%s", s))
+	path, err := filepath.Abs(fmt.Sprintf("pkg/12/%s", s))
 	if err != nil {
 		return nil, err
 	}
@@ -238,4 +238,102 @@ func WebSocketTokenValidateToken(tokenString string, tenantNamespace string) err
 	}
 
 	return nil
+}
+
+func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Post) error {
+	var images [][]byte
+	var paths []string
+	query := fmt.Sprintf("SELECT post_images, image_paths FROM %s.post WHERE post_id = $1", tenantNamespace)
+	err = db.Connection.QueryRow(query, uPostId.String()).Scan(pq.Array(&images), pq.Array(&paths))
+	if err != nil {
+		return err
+	}
+
+	wd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	path := filepath.Join(wd, "pkg/"+tenantNamespace)
+	logs.Logger.Info(path)
+
+	fileInfo, err := ioutil.ReadDir(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			_ = logs.Logger.Warn(err)
+		} else {
+			return err
+		}
+	}
+
+	if fileInfo != nil {
+		for _, file := range fileInfo {
+			logs.Logger.Info(file.Name())
+
+			if file.Name() == "f.json" {
+				continue
+			}
+
+			fileLocation := filepath.Join(path, file.Name())
+
+			openImage, err := os.Open(fileLocation)
+			if err != nil {
+				return err
+			}
+
+			imageBytes, err := ioutil.ReadAll(openImage)
+			if err != nil {
+				return err
+			}
+			err = openImage.Close()
+			if err != nil {
+				return err
+			}
+			images = append(images, imageBytes)
+
+			jsonFile, err := os.Open(filepath.Join(path, "f.json"))
+			if err != nil {
+				return err
+			}
+
+			readFile, err := ioutil.ReadAll(jsonFile)
+			if err != nil {
+				return err
+			}
+			err = jsonFile.Close()
+			if err != nil {
+				return err
+			}
+
+			fileData := make(map[string]string)
+			err = json.Unmarshal(readFile, &fileData)
+			if err != nil {
+				return err
+			}
+
+			imagePath := fileData[file.Name()]
+			logs.Logger.Info(imagePath)
+			paths = append(paths, imagePath)
+		}
+	}
+
+	err = os.RemoveAll(path)
+	if err != nil {
+		return err
+	}
+
+	//TODO: Validate post uuid
+	query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
+	logs.Logger.Info(query)
+
+	_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, pq.Array(&images), pq.Array(&paths), uPostId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func Update(tenantNamespace string, err error, uPostId *uuid.UUID, post *Post) error {
+	err = updatePost(tenantNamespace, err, uPostId, post)
+	return err
 }

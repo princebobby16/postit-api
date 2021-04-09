@@ -1,4 +1,4 @@
-1617734417753107100 [Info] -----BEGIN PRIVATE KEY-----
+1617969167082484300 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,139 +26,43 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1617734418390778600 [Info] Connected to Postgres DB successfully
-1617734418422779400 [Info] Server running on port5379
-1617734437529928500 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNTYzNiwianRpIjoiYzY3ZjVhMDQtNDA4NC00M2VmLWI0NWMtYzhmZWRjZmJjYTRlIiwiaWF0IjoxNjE3NzM0NDM2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.FLrmKkqZSspbMMwDGVuFcg2D6lFibXivzyBgr1HDJhvMXzQHLPmiXQsHXzTAwoSIYOGffJG9Swls3bqb--w_fQ
-1617734437736484200 [Warn] check toke expiration time
-1617734437756086900 [Warn] About to get to validator
-1617734437757086400 [Info] Passed validator
-1617734437757086400 [Info] /schedule-post
-1617734437767139800 [Info] ===========================================
-1617734437773723800 [Info] Handling Fetch Post Schedule...
-1617734437774722800 [Info] ===========================================
-1617734437783113100 [Info] 0a56b1d6-3de1-4646-86c7-85d06634d885
-1617734437798737400 [Info] map[tenant-namespace:postit trace-id:1ab53b1b-f24c-40a1-93b7-3a03cddc05e6]
-1617734437834181500 [Info] SELECT * FROM postit.schedule ORDER BY updated_at DESC LIMIT 200
-1617734437913696900 [Info] {[] {2021-04-06 18:40:37.9136969 +0000 GMT m=+20.894259201 0a56b1d6-3de1-4646-86c7-85d06634d885 1ab53b1b-f24c-40a1-93b7-3a03cddc05e6 SUCCESS}}
-1617734460226898600 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNTYzNiwianRpIjoiYzY3ZjVhMDQtNDA4NC00M2VmLWI0NWMtYzhmZWRjZmJjYTRlIiwiaWF0IjoxNjE3NzM0NDM2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.FLrmKkqZSspbMMwDGVuFcg2D6lFibXivzyBgr1HDJhvMXzQHLPmiXQsHXzTAwoSIYOGffJG9Swls3bqb--w_fQ
-1617734460313285500 [Warn] check toke expiration time
-1617734460329287300 [Warn] About to get to validator
-1617734460360291500 [Info] Passed validator
-1617734460362289500 [Info] /posts
-1617734460395292700 [Info] ===========================================
-1617734460409291700 [Info] Handling Fetch post ...
-1617734460411293500 [Info] ===========================================
-1617734460430291500 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617734460444293400 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617734460545323300 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617734460550330100 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617734460568330900 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNTYzNiwianRpIjoiYzY3ZjVhMDQtNDA4NC00M2VmLWI0NWMtYzhmZWRjZmJjYTRlIiwiaWF0IjoxNjE3NzM0NDM2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.FLrmKkqZSspbMMwDGVuFcg2D6lFibXivzyBgr1HDJhvMXzQHLPmiXQsHXzTAwoSIYOGffJG9Swls3bqb--w_fQ
-1617734460571331300 [Warn] check toke expiration time
-1617734460574331700 [Warn] About to get to validator
-1617734460575331200 [Info] Passed validator
-1617734460577331100 [Info] /posts
-1617734460578332000 [Info] ===========================================
-1617734460594332900 [Info] Handling Fetch post ...
-1617734460595332900 [Info] ===========================================
-1617734460601332200 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617734460602333600 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617734460605333000 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617734460607332500 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617735975397477400 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzE3NSwianRpIjoiZDcxZGE5ZDQtN2U3NS00ODI5LTg5YzYtYzJjMjQyNTQ3MzJkIiwiaWF0IjoxNjE3NzM1OTc1LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.1C0CgTe3E3vQTpKQg5O4ilk8JyMzAIX33dRATFdvrT0TNZed4QHaPBgWoO6rB02P0sgWWmF3IAyg7lxZxAG6RA
-1617735975411478300 [Warn] check toke expiration time
-1617735975413477800 [Warn] About to get to validator
-1617735975414477800 [Info] Passed validator
-1617735975416476800 [Info] /schedule-post
-1617735975417478100 [Info] ===========================================
-1617735975420479900 [Info] Handling Fetch Post Schedule...
-1617735975422478400 [Info] ===========================================
-1617735975424478400 [Info] 57dee7bf-ba16-47c7-bc57-fba4e02ed4a6
-1617735975425476900 [Info] map[tenant-namespace:postit trace-id:1ab53b1b-f24c-40a1-93b7-3a03cddc05e6]
-1617735975427477800 [Info] SELECT * FROM postit.schedule ORDER BY updated_at DESC LIMIT 200
-1617735975489482300 [Info] {[] {2021-04-06 19:06:15.4894823 +0000 GMT m=+1558.470044601 57dee7bf-ba16-47c7-bc57-fba4e02ed4a6 1ab53b1b-f24c-40a1-93b7-3a03cddc05e6 SUCCESS}}
-1617735979978077000 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzE3NSwianRpIjoiZDcxZGE5ZDQtN2U3NS00ODI5LTg5YzYtYzJjMjQyNTQ3MzJkIiwiaWF0IjoxNjE3NzM1OTc1LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.1C0CgTe3E3vQTpKQg5O4ilk8JyMzAIX33dRATFdvrT0TNZed4QHaPBgWoO6rB02P0sgWWmF3IAyg7lxZxAG6RA
-1617735980034080300 [Warn] check toke expiration time
-1617735980050080300 [Warn] About to get to validator
-1617735980066082500 [Info] Passed validator
-1617735980067081600 [Info] /posts
-1617735980069081500 [Info] ===========================================
-1617735980083082500 [Info] Handling Fetch post ...
-1617735980085082400 [Info] ===========================================
-1617735980086081900 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617735980116085100 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617735980135085400 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617735980182089500 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617735980537108000 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzE3NSwianRpIjoiZDcxZGE5ZDQtN2U3NS00ODI5LTg5YzYtYzJjMjQyNTQ3MzJkIiwiaWF0IjoxNjE3NzM1OTc1LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.1C0CgTe3E3vQTpKQg5O4ilk8JyMzAIX33dRATFdvrT0TNZed4QHaPBgWoO6rB02P0sgWWmF3IAyg7lxZxAG6RA
-1617735980544108700 [Warn] check toke expiration time
-1617735980545108600 [Warn] About to get to validator
-1617735980554108400 [Info] Passed validator
-1617735980560110500 [Info] /posts
-1617735980562110400 [Info] ===========================================
-1617735980563109000 [Info] Handling Fetch post ...
-1617735980565109900 [Info] ===========================================
-1617735980566108900 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617735980569110700 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617735980572111500 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617735980574111900 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617736527251790000 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzcyNiwianRpIjoiNTFmYjgwZDUtNTQ5Yi00YTUzLThjYTktOWJjZjQwZTI4MTk1IiwiaWF0IjoxNjE3NzM2NTI2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.rejA17M64idyaOuK8TxuF9znQAexbsz7ZvdDB_nCcVTDZgdkp4tsu0lkFhVIHVnLrHZ96swgDE9Ud1spNnh7dg
-1617736527284793600 [Warn] check toke expiration time
-1617736527289791600 [Warn] About to get to validator
-1617736527292792900 [Info] Passed validator
-1617736527295792800 [Info] /schedule-post
-1617736527298794600 [Info] ===========================================
-1617736527303794000 [Info] Handling Fetch Post Schedule...
-1617736527306794300 [Info] ===========================================
-1617736527308795200 [Info] 4fc404e3-b143-44e3-ba30-2ce325ba903a
-1617736527311794600 [Info] map[tenant-namespace:postit trace-id:1ab53b1b-f24c-40a1-93b7-3a03cddc05e6]
-1617736527312794600 [Info] SELECT * FROM postit.schedule ORDER BY updated_at DESC LIMIT 200
-1617736527317794900 [Info] {[] {2021-04-06 19:15:27.3177949 +0000 GMT m=+2110.298357201 4fc404e3-b143-44e3-ba30-2ce325ba903a 1ab53b1b-f24c-40a1-93b7-3a03cddc05e6 SUCCESS}}
-1617736545840122900 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzcyNiwianRpIjoiNTFmYjgwZDUtNTQ5Yi00YTUzLThjYTktOWJjZjQwZTI4MTk1IiwiaWF0IjoxNjE3NzM2NTI2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.rejA17M64idyaOuK8TxuF9znQAexbsz7ZvdDB_nCcVTDZgdkp4tsu0lkFhVIHVnLrHZ96swgDE9Ud1spNnh7dg
-1617736545928125700 [Warn] check toke expiration time
-1617736545944128900 [Warn] About to get to validator
-1617736545945127500 [Info] Passed validator
-1617736545945127500 [Info] /posts
-1617736545959128400 [Info] ===========================================
-1617736545960127900 [Info] Handling Fetch post ...
-1617736545961127900 [Info] ===========================================
-1617736545962127900 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617736545962127900 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617736546113137000 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617736546129137900 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617736546200141700 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzcyNiwianRpIjoiNTFmYjgwZDUtNTQ5Yi00YTUzLThjYTktOWJjZjQwZTI4MTk1IiwiaWF0IjoxNjE3NzM2NTI2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.rejA17M64idyaOuK8TxuF9znQAexbsz7ZvdDB_nCcVTDZgdkp4tsu0lkFhVIHVnLrHZ96swgDE9Ud1spNnh7dg
-1617736546202141200 [Warn] check toke expiration time
-1617736546203142100 [Warn] About to get to validator
-1617736546205142900 [Info] Passed validator
-1617736546205142900 [Info] /posts
-1617736546206141500 [Info] ===========================================
-1617736546206141500 [Info] Handling Fetch post ...
-1617736546207141500 [Info] ===========================================
-1617736546207141500 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617736546208141900 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617736546210143700 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617736546211141800 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617738114815476500 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczNzcyNiwianRpIjoiNTFmYjgwZDUtNTQ5Yi00YTUzLThjYTktOWJjZjQwZTI4MTk1IiwiaWF0IjoxNjE3NzM2NTI2LCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.rejA17M64idyaOuK8TxuF9znQAexbsz7ZvdDB_nCcVTDZgdkp4tsu0lkFhVIHVnLrHZ96swgDE9Ud1spNnh7dg
-1617738114826478000 [Warn] check toke expiration time
-1617738114827478000 [Info] Token expired! getting a new one....
-1617738115697529300 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzczOTMxNSwianRpIjoiN2NmMjRlNWEtZmU3Ny00MGNiLWFmMjctZDFkMjJjYTliZTMxIiwiaWF0IjoxNjE3NzM4MTE1LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
-1617738115698527400 [Warn] About to get to validator
-1617738115699527400 [Info] Passed validator
-1617738115699527400 [Info] /posts
-1617738115700526900 [Info] ===========================================
-1617738115701527300 [Info] Handling Fetch post ...
-1617738115701527300 [Info] ===========================================
-1617738115702526300 [Info] Headers => TraceId: %s, TenantNamespace: %s1ab53b1b-f24c-40a1-93b7-3a03cddc05e6postit
-1617738115703525800 [Info] SELECT post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled, created_at, updated_at FROM postit.post ORDER BY updated_at DESC LIMIT 1000
-1617738115706528100 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617738115707528100 [Info] [{37d4ae18-1deb-4f5c-aa19-ea55044f42b2  b [] [] [] false false false false false 2021-04-05 16:56:25.524727 +0100 BST 2021-04-05 16:56:25.524727 +0100 BST} {f1d2da0e-afef-476b-a02c-d73af9723990  a [] [] [] false false false false false 2021-04-05 16:56:21.091816 +0100 BST 2021-04-05 16:56:21.091816 +0100 BST}]
-1617740482721019500 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzc0MTY4MSwianRpIjoiYzUwZTg3OTktYzkzZS00ZTI1LWExYjYtMjRlNzA4NzI1MmUyIiwiaWF0IjoxNjE3NzQwNDgxLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.RkbOP1Qpje2ydr5f7-NyWbugDItfs90aSLaqiATVa0Z2ghaco7zo0zGgfqj1nWdp9dGd128KaDLFQTvRVHhgKg
-1617740482727019700 [Warn] check toke expiration time
-1617740482729018300 [Warn] About to get to validator
-1617740482729018300 [Info] Passed validator
-1617740482730019600 [Info] /schedule-post
-1617740482731019600 [Info] ===========================================
-1617740482732018600 [Info] Handling Fetch Post Schedule...
-1617740482732018600 [Info] ===========================================
-1617740482733018600 [Info] 39e04fc1-a340-4b51-8e95-18939ee724ad
-1617740482734019500 [Info] map[tenant-namespace:postit trace-id:1ab53b1b-f24c-40a1-93b7-3a03cddc05e6]
-1617740482734019500 [Info] SELECT * FROM postit.schedule ORDER BY updated_at DESC LIMIT 200
-1617740482738020800 [Info] {[] {2021-04-06 20:21:22.7380208 +0000 GMT m=+6065.718583101 39e04fc1-a340-4b51-8e95-18939ee724ad 1ab53b1b-f24c-40a1-93b7-3a03cddc05e6 SUCCESS}}
+1617969167330606300 [Info] Connected to Postgres DB successfully
+1617969167338608800 [Info] Server running on port5379
+1617969182657264300 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDIxOThlOC03ZDQ4LTQ3ZTUtOTA3Yy1kOGMxNTE2NWMxNDciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjEyMjA4MTA1LCJpYXQiOjE2MTIyMDY5MDV9.Dz18XgfMP-XE4oRes5jmqUQJlkNEBw-SdEHnHJ3eBoDH3W555yiceSsWG1gd3VsXORKLGRHT6FNdbWBl5Yng6Q
+1617969182659264700 [Warn] check toke expiration time
+1617969182661265100 [Info] Token expired! getting a new one....
+1617969182699266700 [Info] refresh-token: 
+1617969182700268100 [Warn] About to get to validator
+1617969182700268100 [Info] Passed validator
+1617969182700268100 [Info] /file/upload
+1617969182700268100 [Info] Headers => TraceId: f7b0861b-559a-42ea-be0a-781ff3210805, TenantNamespace: postit
+1617969182701266700 [Info] Uploaded File: 160328037_225195565963386_247323707126800031_n.jpg
+1617969182701266700 [Info] File Size: 42683
+1617969182702266200 [Info] MIME Header: map[Content-Disposition:[form-data; name="media_file"; filename="160328037_225195565963386_247323707126800031_n.jpg"] Content-Type:[image/jpeg]]
+1617969182707267900 [Info] File doesnt Exist creating
+1617969184188352200 [Info] Successfully resized image...
+1617969200390852200 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDIxOThlOC03ZDQ4LTQ3ZTUtOTA3Yy1kOGMxNTE2NWMxNDciLCJhdWQiOiJwb3N0aXQiLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIiwiZXhwIjoxNjEyMjA4MTA1LCJpYXQiOjE2MTIyMDY5MDV9.Dz18XgfMP-XE4oRes5jmqUQJlkNEBw-SdEHnHJ3eBoDH3W555yiceSsWG1gd3VsXORKLGRHT6FNdbWBl5Yng6Q
+1617969200390852200 [Warn] check toke expiration time
+1617969200390852200 [Info] Token expired! getting a new one....
+1617969200407853500 [Info] refresh-token: 
+1617969200407853500 [Warn] About to get to validator
+1617969200407853500 [Info] Passed validator
+1617969200407853500 [Info] /posts
+1617969200408853500 [Info] ===========================================
+1617969200408853500 [Info] Handling Update Post ...
+1617969200408853500 [Info] ===========================================
+1617969200408853500 [Info] Headers => TraceId: %s, TenantNamespace: %sa0fcb5a5-1a4a-44b9-b4b7-8110b23de5cfpostit
+1617969200408853500 [Info] {
+	"post_message": "Wow with Digital",
+	"hash_tags": ["GrowWithShiftr", "JoinTheMovement"],
+	"post_priority": false
+}
+1617969200409853500 [Info] [#GrowWithShiftr #JoinTheMovement]
+1617969200409853500 [Info] 37d4ae18-1deb-4f5c-aa19-ea55044f42b2
+1617969200450856400 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit
+1617969200450856400 [Info] 160328037_225195565963386_247323707126800031_n.jpg
+1617969200451855400 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit/160328037_225195565963386_247323707126800031_n.jpg
+1617969200451855400 [Info] f.json
+1617969200761870900 [Info] UPDATE postit.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6
+1617969243581190600 [Warn] http: Server closed
+1617969244081217900 [Warn] shutting down

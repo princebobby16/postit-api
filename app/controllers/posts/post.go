@@ -168,7 +168,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 			_ = logs.Logger.Error(err)
 			return
 		}
-	}()
+	} ()
 
 	//Just to be sure data was inserted
 	insertId, _ := result.LastInsertId()
@@ -265,13 +265,17 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 		postList = append(postList, post)
 	}
 	// Generate an id for this particular transaction
-	logs.Logger.Info(postList)
+	if postList != nil || len(postList) != 0 {
+		logs.Logger.Info(postList[0].PostMessage)
+	}
 
 	if postList == nil || len(postList) == 0 {
 		postList = []pkg.DbPost{}
 	}
 
-	logs.Logger.Info(postList)
+	if postList != nil || len(postList) != 0 {
+		logs.Logger.Info(postList[0].PostMessage)
+	}
 
 	//	If everything goes right build the response
 	response := pkg.FetchPostResponse{
@@ -341,29 +345,23 @@ func HandleUpdatePost(w http.ResponseWriter, r *http.Request) {
 	post.HashTags = hashTagList
 
 	//	Get url param
-	postId := r.URL.Query().Get("post_id")
-	logs.Logger.Info(postId)
-	uPostId, err := uuid.Parse(postId)
+	uPostId, err := uuid.Parse(r.URL.Query().Get("post_id"))
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusBadRequest)
 		return
 	}
-
 	logs.Logger.Info(uPostId)
 
-	//TODO: Validate post uuid
-	query := fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3 WHERE post_id = $4", tenantNamespace)
-	logs.Logger.Info(query)
-
-	_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, uPostId)
-	if err != nil {
-		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
-		return
-	}
+	go func() {
+		if err = pkg.Update(tenantNamespace, err, uPostId, post); err != nil {
+			_ = logs.Logger.Error(err)
+			return
+		}
+	}()
 
 	response := &pkg.StandardResponse{
 		Data: pkg.Data{
-			Id:        postId,
+			Id:        uPostId.String(),
 			UiMessage: "Post Updated!",
 		},
 		Meta: pkg.Meta{
