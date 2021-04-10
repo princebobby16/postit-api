@@ -59,21 +59,21 @@ func AllAccounts(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if appInfo.ApplicationName == "facebook" {
-			fb = append(fb, pkg.FacebookPostitUserData {
+			fb = append(fb, pkg.FacebookPostitUserData{
 				Username:    appInfo.UserName,
-				UserId:      appInfo.UserName,
+				UserId:      appInfo.UserId,
 				AccessToken: appInfo.UserAccessToken,
 			})
 		} else if appInfo.ApplicationName == "twitter" {
-			tw = append(tw, pkg.TwitterPostitUserData {
+			tw = append(tw, pkg.TwitterPostitUserData{
 				Username:    appInfo.UserName,
-				UserId:      appInfo.UserName,
+				UserId:      appInfo.UserId,
 				AccessToken: appInfo.UserAccessToken,
 			})
 		} else if appInfo.ApplicationName == "linked_in" {
-			li = append(li, pkg.LinkedInPostitUserData {
+			li = append(li, pkg.LinkedInPostitUserData{
 				Username:    appInfo.UserName,
-				UserId:      appInfo.UserName,
+				UserId:      appInfo.UserId,
 				AccessToken: appInfo.UserAccessToken,
 			})
 		}
@@ -82,14 +82,14 @@ func AllAccounts(w http.ResponseWriter, r *http.Request) {
 
 	_ = json.NewEncoder(w).Encode(struct {
 		Data pkg.PostitUserData `json:"data"`
-		Meta pkg.Meta			`json:"meta"`
+		Meta pkg.Meta           `json:"meta"`
 	}{
-		Data: pkg.PostitUserData {
+		Data: pkg.PostitUserData{
 			FacebookPostitUserData: fb,
 			TwitterPostitUserData:  tw,
 			LinkedInPostitUserData: li,
 		},
-		Meta: pkg.Meta {
+		Meta: pkg.Meta{
 			Timestamp:     time.Now(),
 			TransactionId: transactionId.String(),
 			TraceId:       traceId,
