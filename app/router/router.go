@@ -134,6 +134,12 @@ func InitRoutes() *mux.Router {
 			Method:  http.MethodGet,
 			Handler: social.AllAccounts,
 		},
+		Route{
+			Name:    "Fetch facebook Posts",
+			Path:    "/fb/posts",
+			Method:  http.MethodGet,
+			Handler: social.FetchFacebookPosts,
+		},
 
 		// websockets
 		Route{
@@ -148,16 +154,16 @@ func InitRoutes() *mux.Router {
 		//	Handler: posts.CountPosts,
 		//},
 		Route{
-			Name: "Count Schedule",
+			Name:    "Count Schedule",
 			Path:    "/count/data",
 			Method:  http.MethodGet,
 			Handler: posts.CountSchedule,
 		},
 
-		Route {
-			Name: "Media Upload",
-			Path: "/file/upload",
-			Method: http.MethodPost,
+		Route{
+			Name:    "Media Upload",
+			Path:    "/file/upload",
+			Method:  http.MethodPost,
 			Handler: mediaupload.HandleMediaUpload,
 		},
 

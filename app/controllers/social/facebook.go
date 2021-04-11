@@ -3,6 +3,7 @@ package social
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/lib/pq"
 	"github.com/twinj/uuid"
 	"gitlab.com/pbobby001/postit-api/db"
 	"gitlab.com/pbobby001/postit-api/pkg"
@@ -13,7 +14,7 @@ import (
 	"time"
 )
 
-func HandleFacebookCode (w http.ResponseWriter, r *http.Request) {
+func HandleFacebookCode(w http.ResponseWriter, r *http.Request) {
 	transactionId := uuid.NewV4()
 
 	headers, err := pkg.ValidateHeaders(r)
@@ -27,7 +28,7 @@ func HandleFacebookCode (w http.ResponseWriter, r *http.Request) {
 	tenantNamespace := headers["tenant-namespace"]
 
 	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: "+ traceId +", TenantNamespace: "+tenantNamespace)
+	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: " + tenantNamespace)
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -153,8 +154,8 @@ func HandleFacebookCode (w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info("Last insert Id: ", i)
 
 	_ = json.NewEncoder(w).Encode(struct {
-		Message string 		`json:"message"`
-		Meta pkg.Meta 		`json:"meta"`
+		Message string   `json:"message"`
+		Meta    pkg.Meta `json:"meta"`
 	}{
 		Message: "Stored Code",
 		Meta: pkg.Meta{
@@ -166,7 +167,7 @@ func HandleFacebookCode (w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
+func HandleDeleteFacebookCode(w http.ResponseWriter, r *http.Request) {
 
 	transactionId := uuid.NewV4()
 
@@ -181,7 +182,7 @@ func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
 	tenantNamespace := headers["tenant-namespace"]
 
 	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: "+ traceId +", TenantNamespace: "+tenantNamespace)
+	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: " + tenantNamespace)
 
 	appUuid := r.URL.Query().Get("app_id")
 	if appUuid == "" {
@@ -197,9 +198,9 @@ func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_ = json.NewEncoder(w).Encode(pkg.StandardResponse {
-		Data: pkg.Data {
-			Id: "",
+	_ = json.NewEncoder(w).Encode(pkg.StandardResponse{
+		Data: pkg.Data{
+			Id:        "",
 			UiMessage: "Code Deleted",
 		},
 		Meta: pkg.Meta{
@@ -209,4 +210,92 @@ func HandleDeleteFacebookCode (w http.ResponseWriter, r *http.Request) {
 			Status:        "SUCCESS",
 		},
 	})
+}
+
+func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
+	logs.Logger.Info("===========================================")
+	logs.Logger.Info("Handling Fetch Facebook Posts ...")
+	logs.Logger.Info("===========================================")
+	transactionId := uuid.NewV4()
+
+	headers, err := pkg.ValidateHeaders(r)
+	if err != nil {
+		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusBadRequest)
+		return
+	}
+
+	//Get the relevant headers
+	traceId := headers["trace-id"]
+	tenantNamespace := headers["tenant-namespace"]
+
+	// Logging the headers
+	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: " + tenantNamespace)
+
+	query := fmt.Sprintf("SELECT * FROM %s.post WHERE post_fb_status = $1", tenantNamespace)
+	rows, err := db.Connection.Query(query, true)
+	if err != nil {
+		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
+		return
+	}
+	var dbP pkg.DbPost
+	var dbPosts []pkg.DbPost
+	for rows.Next() {
+		err := rows.Scan(
+			&dbP.PostId,
+			&dbP.FacebookPostId,
+			&dbP.PostMessage,
+			pq.Array(&dbP.PostImages),
+			pq.Array(&dbP.ImagePaths),
+			pq.Array(&dbP.HashTags),
+			&dbP.PostFbStatus,
+			&dbP.PostTwStatus,
+			&dbP.PostLiStatus,
+			&dbP.PostPriority,
+			&dbP.Scheduled,
+			&dbP.CreatedOn,
+			&dbP.UpdatedOn,
+		)
+		if err != nil {
+			pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
+			return
+		}
+
+		if dbP.ImagePaths == nil || len(dbP.ImagePaths) == 0 {
+			dbP.ImagePaths = []string{}
+		}
+
+		if dbP.PostImages == nil || len(dbP.PostImages) == 0 {
+			dbP.PostImages = [][]byte{}
+		}
+
+		if dbP.HashTags == nil || len(dbP.HashTags) == 0 {
+			dbP.HashTags = []string{}
+		}
+
+		dbPosts = append(dbPosts, dbP)
+	}
+
+	if dbPosts == nil {
+		dbPosts = []pkg.DbPost{}
+	} else {
+		logs.Logger.Info(dbPosts[0].PostMessage)
+	}
+
+	//	If everything goes right build the response
+	response := pkg.FetchPostResponse{
+		Data: dbPosts,
+		Meta: pkg.Meta{
+			Timestamp:     time.Now(),
+			TransactionId: transactionId.String(),
+			TraceId:       traceId,
+			Status:        "SUCCESS",
+		},
+	}
+
+	w.WriteHeader(http.StatusFound)
+	err = json.NewEncoder(w).Encode(&response)
+	if err != nil {
+		pkg.SendErrorResponse(w, transactionId, traceId, err, http.StatusInternalServerError)
+		return
+	}
 }

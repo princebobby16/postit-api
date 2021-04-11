@@ -265,16 +265,12 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 		postList = append(postList, post)
 	}
 	// Generate an id for this particular transaction
-	if postList != nil || len(postList) != 0 {
+	if postList != nil {
 		logs.Logger.Info(postList[0].PostMessage)
 	}
 
 	if postList == nil || len(postList) == 0 {
 		postList = []pkg.DbPost{}
-	}
-
-	if postList != nil || len(postList) != 0 {
-		logs.Logger.Info(postList[0].PostMessage)
 	}
 
 	//	If everything goes right build the response
