@@ -88,7 +88,7 @@ func HandleBatchPost(w http.ResponseWriter, r *http.Request) {
 
 	// If the request is received; Iterate over it and store it in the db
 	for _, post := range posts {
-		logs.Logger.Info("Post Image", post.PostImage)
+		logs.Logger.Info("Post Image", post.PostImages)
 		hashTagList := pkg.GenerateHashTags(post.HashTags)
 		logs.Logger.Info("Hash Tag List: ", hashTagList)
 

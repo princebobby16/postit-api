@@ -168,7 +168,7 @@ func HandleCreatePost(w http.ResponseWriter, r *http.Request) {
 			_ = logs.Logger.Error(err)
 			return
 		}
-	} ()
+	}()
 
 	//Just to be sure data was inserted
 	insertId, _ := result.LastInsertId()
@@ -209,7 +209,7 @@ func HandleFetchPosts(w http.ResponseWriter, r *http.Request) {
 	tenantNamespace := headers["tenant-namespace"]
 
 	// Logging the headers
-	logs.Logger.Info("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
+	logs.Logger.Infof("Headers => TraceId: %s, TenantNamespace: %s", traceId, tenantNamespace)
 
 	// TODO: refactor fetch post to send images as well
 	// Build the sql query

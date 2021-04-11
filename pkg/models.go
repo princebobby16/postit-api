@@ -128,7 +128,8 @@ type (
 	Post struct {
 		PostId       string    `json:"post_id"`
 		PostMessage  string    `json:"post_message"`
-		PostImage    [][]byte  `json:"post_image"`
+		PostImages   [][]byte  `json:"post_images"`
+		ImagePaths   []string  `json:"image_paths"`
 		HashTags     []string  `json:"hash_tags"`
 		PostPriority bool      `json:"post_priority"`
 		CreatedOn    time.Time `json:"created_on"`
