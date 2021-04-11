@@ -137,7 +137,7 @@ func CreatePost(post Post, tenantNamespace string, postId uuid.UUID) error {
 		}
 	} else if post.PostImage != nil {
 		imageExtension := ""
-		switch http.DetectContentType(post.PostImage) {
+		switch http.DetectContentType(post.PostImage[0]) {
 		case "image/webp":
 			imageExtension = ".webp"
 		case "image/jpeg":
@@ -315,20 +315,24 @@ func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Pos
 			logs.Logger.Info(imagePath)
 			paths = append(paths, imagePath)
 		}
-	}
-
-	err = os.RemoveAll(path)
-	if err != nil {
-		return err
-	}
-
-	//TODO: Validate post uuid
-	query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
-	logs.Logger.Info(query)
-
-	_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, pq.Array(&images), pq.Array(&paths), uPostId)
-	if err != nil {
-		return err
+		err = os.RemoveAll(path)
+		if err != nil {
+			return err
+		}
+		//TODO: Validate post uuid
+		query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
+		logs.Logger.Info(query)
+		_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, pq.Array(&images), pq.Array(&paths), uPostId)
+		if err != nil {
+			return err
+		}
+	} else {
+		query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
+		logs.Logger.Info(query)
+		_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, pq.Array(&post.PostImage), pq.Array(&paths), uPostId)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
