@@ -259,7 +259,7 @@ func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Pos
 	// (1)
 	if len(images) != len(post.PostImages) {
 		query := fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
-		_, err = db.Connection.Exec(query, &post.PostMessage, &post.HashTags, &post.PostPriority, pq.Array(&post.PostImages), pq.Array(&post.ImagePaths), &post.PostId)
+		_, err = db.Connection.Exec(query, &post.PostMessage, pq.Array(&post.HashTags), &post.PostPriority, pq.Array(&post.PostImages), pq.Array(&post.ImagePaths), &post.PostId)
 		if err != nil {
 			return err
 		}

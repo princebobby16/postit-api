@@ -1,4 +1,4 @@
-1618178745740024600 [Info] -----BEGIN PRIVATE KEY-----
+1618187796478111300 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,19 +26,7 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1618178746262054300 [Info] Connected to Postgres DB successfully
-1618178746263055200 [Info] Server running on port5379
-1618178928459652700 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
-1618178928460652700 [Warn] check toke expiration time
-1618178928461651700 [Info] Token expired! getting a new one....
-1618178928589890800 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODE4MDEyOCwianRpIjoiZTA5YmY5NGQtMjU1My00ODM4LTg1ZWUtOTNlY2Y1YTFkNjk1IiwiaWF0IjoxNjE4MTc4OTI4LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
-1618178928589890800 [Warn] About to get to validator
-1618178928589890800 [Info] Passed validator
-1618178928589890800 [Info] /fb/posts
-1618178928590888000 [Info] ===========================================
-1618178928590888000 [Info] Handling Fetch Facebook Posts ...
-1618178928590888000 [Info] ===========================================
-1618178928593889300 [Info] Headers => TraceId: ea59676a-f53a-48be-8cae-52268fb8e9e4, TenantNamespace: postit
-1618178928859904600 [Info] Once upon a time! there lived a girl called Sonia😃😀
-1618179035171337100 [Warn] http: Server closed
-1618179035672541000 [Warn] shutting down
+1618187797046132000 [Info] Connected to Postgres DB successfully
+1618187797048125400 [Info] Server running on port5379
+1618187806381340200 [Warn] http: Server closed
+1618187806881866500 [Warn] shutting down
