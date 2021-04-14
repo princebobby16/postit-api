@@ -3,7 +3,6 @@ package social
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/lib/pq"
 	"github.com/twinj/uuid"
 	"gitlab.com/pbobby001/postit-api/db"
 	"gitlab.com/pbobby001/postit-api/pkg"
@@ -231,15 +230,15 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 	// Logging the headers
 	logs.Logger.Info("Headers => TraceId: " + traceId + ", TenantNamespace: " + tenantNamespace)
 
-	query := fmt.Sprintf("SELECT * FROM %s.post WHERE post_fb_status = $1", tenantNamespace)
+	query := fmt.Sprintf("SELECT post_id, facebook_post_id, facebook_user_id, post_message FROM %s.post WHERE post_fb_status = $1", tenantNamespace)
 	rows, err := db.Connection.Query(query, true)
 	if err != nil {
 		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
 		return
 	}
 
-	var dbP pkg.DbPost
-	var dbPosts []pkg.DbPost
+	var dbP pkg.FacebookPostData
+	var dbPosts []pkg.FacebookPostData
 	var comment pkg.Comment
 	for rows.Next() {
 		err := rows.Scan(
@@ -247,16 +246,6 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			&dbP.FacebookPostId,
 			&dbP.FacebookUserId,
 			&dbP.PostMessage,
-			pq.Array(&dbP.PostImages),
-			pq.Array(&dbP.ImagePaths),
-			pq.Array(&dbP.HashTags),
-			&dbP.PostFbStatus,
-			&dbP.PostTwStatus,
-			&dbP.PostLiStatus,
-			&dbP.PostPriority,
-			&dbP.Scheduled,
-			&dbP.CreatedOn,
-			&dbP.UpdatedOn,
 		)
 		if err != nil {
 			pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
@@ -314,30 +303,19 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 		logs.Logger.Info(comment)
 		logs.Logger.Info(resp.Status)
 
-		if dbP.ImagePaths == nil || len(dbP.ImagePaths) == 0 {
-			dbP.ImagePaths = []string{}
-		}
-
-		if dbP.PostImages == nil || len(dbP.PostImages) == 0 {
-			dbP.PostImages = [][]byte{}
-		}
-
-		if dbP.HashTags == nil || len(dbP.HashTags) == 0 {
-			dbP.HashTags = []string{}
-		}
 		dbP.Comments = comment
 
 		dbPosts = append(dbPosts, dbP)
 	}
 
 	if dbPosts == nil {
-		dbPosts = []pkg.DbPost{}
+		dbPosts = []pkg.FacebookPostData{}
 	} else {
 		logs.Logger.Info(dbPosts[0].PostMessage)
 	}
 
 	//	If everything goes right build the response
-	response := pkg.FetchPostResponse{
+	response := pkg.FetchFacebookPostResponse{
 		Data: dbPosts,
 		Meta: pkg.Meta{
 			Timestamp:     time.Now(),

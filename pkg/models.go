@@ -161,6 +161,11 @@ type (
 		Meta Meta     `json:"meta"`
 	}
 
+	FetchFacebookPostResponse struct {
+		Data []FacebookPostData `json:"data"`
+		Meta Meta               `json:"meta"`
+	}
+
 	FetchSchedulePostResponse struct {
 		Data []PostSchedule `json:"data"`
 		Meta Meta           `json:"meta"`
@@ -187,11 +192,17 @@ type (
 		Id   string `json:"id"`
 	}
 
+	FacebookPostData struct {
+		PostId         string  `json:"post_id"`
+		FacebookPostId string  `json:"facebook_post_id"`
+		FacebookUserId string  `json:"facebook_user_id"`
+		Comments       Comment `json:"comments"`
+		PostMessage    string  `json:"post_message"`
+	}
+
 	DbPost struct {
 		PostId         string    `json:"post_id"`
 		FacebookPostId string    `json:"facebook_post_id"`
-		FacebookUserId string    `json:"facebook_user_id"`
-		Comments       Comment   `json:"comments"`
 		PostMessage    string    `json:"post_message"`
 		PostImages     [][]byte  `json:"post_images"`
 		ImagePaths     []string  `json:"image_paths"`
