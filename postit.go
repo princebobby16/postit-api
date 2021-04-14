@@ -25,7 +25,7 @@ func main() {
 
 	r := router.InitRoutes()
 
-	origins := handlers.AllowedOrigins([]string{ /*"https://postit-ui.herokuapp.com"*/ "*", "http://localhost:8080", "postit-ui.herokuapp.com"})
+	origins := handlers.AllowedOrigins([]string{"*", "http://localhost:8080", "https://postit-ui.herokuapp.com", "https://postit-dev-ui.herokuapp.com"})
 	headers := handlers.AllowedHeaders([]string{
 		"Content-Type",
 		"Content-Length",
@@ -91,7 +91,7 @@ func main() {
 	// until the timeout deadline.
 	err := server.Shutdown(ctx)
 	if err != nil {
-		_ =logs.Logger.Error(err)
+		_ = logs.Logger.Error(err)
 		os.Exit(0)
 	}
 

@@ -266,7 +266,6 @@ func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Pos
 	}
 
 	logs.Logger.Infof("length of images: %v, length of postImages: %v", len(images), len(post.PostImages))
-
 	/*
 		(2)
 		get the working  directory
@@ -286,12 +285,12 @@ func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Pos
 	if err != nil {
 		if os.IsNotExist(err) {
 			_ = logs.Logger.Warn(err)
-			return nil
 		} else {
 			return err
 		}
 	}
 
+	logs.Logger.Info(fileInfo)
 	// (3)
 	if fileInfo != nil {
 		for _, file := range fileInfo {
@@ -348,14 +347,13 @@ func updatePost(tenantNamespace string, err error, uPostId *uuid.UUID, post *Pos
 		}
 
 		logs.Logger.Infof("new postImages length: %v", len(post.PostImages))
-		// (4)
-		//TODO: Validate post uuid
-		query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
-		logs.Logger.Info(query)
-		_, err = db.Connection.Exec(query, post.PostMessage, pq.Array(post.HashTags), post.PostPriority, pq.Array(&post.PostImages), pq.Array(&post.ImagePaths), uPostId)
-		if err != nil {
-			return err
-		}
+	}
+	// (4)
+	query = fmt.Sprintf("UPDATE %s.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6", tenantNamespace)
+	logs.Logger.Info(query)
+	_, err = db.Connection.Exec(query, &post.PostMessage, pq.Array(&post.HashTags), &post.PostPriority, pq.Array(&post.PostImages), pq.Array(&post.ImagePaths), uPostId)
+	if err != nil {
+		return err
 	}
 	return nil
 }

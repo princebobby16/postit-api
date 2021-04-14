@@ -1,4 +1,4 @@
-1618187796478111300 [Info] -----BEGIN PRIVATE KEY-----
+1618379818667490400 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,7 +26,34 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1618187797046132000 [Info] Connected to Postgres DB successfully
-1618187797048125400 [Info] Server running on port5379
-1618187806381340200 [Warn] http: Server closed
-1618187806881866500 [Warn] shutting down
+1618379819038511600 [Info] Connected to Postgres DB successfully
+1618379819039513000 [Info] Server running on port5379
+1618379824262745100 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzk3MjI5MywianRpIjoiYzgwNmY3NWQtNTg4OC00NzM4LThlOTktY2Q0ZjY2ZGQ2MDUyIiwiaWF0IjoxNjE3OTcxMDkzLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.ANO5z37lZaHX4N9K0Yb1USRvgkMFOdqYPoeraqFitZK258JYrBgDjk_9iDPex3fMM8THlafW_TOIRFW11O9vjQ
+1618379824268745300 [Warn] check toke expiration time
+1618379824268745300 [Info] Token expired! getting a new one....
+1618379824373751000 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODM4MTAyNCwianRpIjoiYmEwNjk2NTQtNTM1YS00ZGQ0LWI1OTMtYzk2MTZhYTUxYzRjIiwiaWF0IjoxNjE4Mzc5ODI0LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
+1618379824374751900 [Warn] About to get to validator
+1618379824374751900 [Info] Passed validator
+1618379824374751900 [Info] /posts
+1618379824374751900 [Info] ===========================================
+1618379824374751900 [Info] Handling Update Post ...
+1618379824375750000 [Info] ===========================================
+1618379824375750000 [Info] Headers => TraceId: %s, TenantNamespace: %sc3a134ea-6004-4e0d-a3ad-c7109941d36dpostit
+1618379824377752700 [Info] {
+      "post_id": "d6bb0fb1-1174-42bb-ab60-62f34e19fd5d",
+      "post_message": "Wow with Digital",
+      "hash_tags": [
+        "#GrowWithShiftr"
+      ],
+      "created_on": "2021-04-11T22:32:48.029749+01:00",
+      "updated_on": "2021-04-11T22:32:48.029749+01:00"
+    }
+1618379824378751700 [Info] [#GrowWithShiftr]
+1618379824378751700 [Info] e95fbf0b-f752-4d78-b390-68658d1d7314
+1618379824430753900 [Info] length of images: 0, length of postImages: 0
+1618379824430753900 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit
+1618379824430753900 [Warn] open C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit: The system cannot find the file specified.
+1618379824431755200 [Info] 
+1618379824431755200 [Info] UPDATE postit.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6
+1618379846589126500 [Warn] http: Server closed
+1618379847089141900 [Warn] shutting down
