@@ -1,4 +1,4 @@
-1618379818667490400 [Info] -----BEGIN PRIVATE KEY-----
+1618407601560774200 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,34 +26,24 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1618379819038511600 [Info] Connected to Postgres DB successfully
-1618379819039513000 [Info] Server running on port5379
-1618379824262745100 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzk3MjI5MywianRpIjoiYzgwNmY3NWQtNTg4OC00NzM4LThlOTktY2Q0ZjY2ZGQ2MDUyIiwiaWF0IjoxNjE3OTcxMDkzLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.ANO5z37lZaHX4N9K0Yb1USRvgkMFOdqYPoeraqFitZK258JYrBgDjk_9iDPex3fMM8THlafW_TOIRFW11O9vjQ
-1618379824268745300 [Warn] check toke expiration time
-1618379824268745300 [Info] Token expired! getting a new one....
-1618379824373751000 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODM4MTAyNCwianRpIjoiYmEwNjk2NTQtNTM1YS00ZGQ0LWI1OTMtYzk2MTZhYTUxYzRjIiwiaWF0IjoxNjE4Mzc5ODI0LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
-1618379824374751900 [Warn] About to get to validator
-1618379824374751900 [Info] Passed validator
-1618379824374751900 [Info] /posts
-1618379824374751900 [Info] ===========================================
-1618379824374751900 [Info] Handling Update Post ...
-1618379824375750000 [Info] ===========================================
-1618379824375750000 [Info] Headers => TraceId: %s, TenantNamespace: %sc3a134ea-6004-4e0d-a3ad-c7109941d36dpostit
-1618379824377752700 [Info] {
-      "post_id": "d6bb0fb1-1174-42bb-ab60-62f34e19fd5d",
-      "post_message": "Wow with Digital",
-      "hash_tags": [
-        "#GrowWithShiftr"
-      ],
-      "created_on": "2021-04-11T22:32:48.029749+01:00",
-      "updated_on": "2021-04-11T22:32:48.029749+01:00"
-    }
-1618379824378751700 [Info] [#GrowWithShiftr]
-1618379824378751700 [Info] e95fbf0b-f752-4d78-b390-68658d1d7314
-1618379824430753900 [Info] length of images: 0, length of postImages: 0
-1618379824430753900 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit
-1618379824430753900 [Warn] open C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit: The system cannot find the file specified.
-1618379824431755200 [Info] 
-1618379824431755200 [Info] UPDATE postit.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6
-1618379846589126500 [Warn] http: Server closed
-1618379847089141900 [Warn] shutting down
+1618407601796787000 [Info] Connected to Postgres DB successfully
+1618407601825790300 [Info] Server running on port5379
+1618407607989144100 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
+1618407607990142700 [Warn] check toke expiration time
+1618407607991142600 [Info] Token expired! getting a new one....
+1618407608056146700 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODQwODgwOCwianRpIjoiZmYyMzI5MWYtNzE3Ny00YmM5LTgwY2QtMThhNjRhNGNlMTAxIiwiaWF0IjoxNjE4NDA3NjA4LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
+1618407608056146700 [Warn] About to get to validator
+1618407608057146700 [Info] Passed validator
+1618407608057146700 [Info] /fb/posts
+1618407608057146700 [Info] ===========================================
+1618407608057146700 [Info] Handling Fetch Facebook Posts ...
+1618407608057146700 [Info] ===========================================
+1618407608057146700 [Info] Headers => TraceId: da83c483-b9d8-429a-a5a2-b6870be6b027, TenantNamespace: postit
+1618407608267157900 [Info] {421d9390-93a3-4d7c-aeee-4af6f922d57c 106504911165786_243842050765404 243952730431775 {[]} Grow with Digital [] [] [#GrowWithShiftr #JoinTheMovement] false true false false true 2021-04-14 12:21:53.65128 +0100 BST 2021-04-14 12:21:53.65128 +0100 BST}
+1618407608268158800 [Info] fetching comments from facebook
+1618407609100203700 [Info] {"data":[{"created_time":"2021-04-14T12:44:30+0000","from":{"name":"Shiftr Gh","id":"106504911165786"},"message":"Hello Shiftr","id":"243842050765404_243860154096927"}],"paging":{"cursors":{"before":"MQZDZD","after":"MQZDZD"}}}
+1618407609101207800 [Info] {[{243842050765404_243860154096927 Hello Shiftr {Shiftr Gh 106504911165786} 2021-04-14T12:44:30+0000}]}
+1618407609101207800 [Info] 200 OK
+1618407609102205500 [Info] Grow with Digital
+1618407706514041100 [Warn] http: Server closed
+1618407707015021000 [Warn] shutting down

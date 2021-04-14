@@ -171,9 +171,27 @@ type (
 		Meta Meta `json:"meta"`
 	}
 
+	Comment struct {
+		Data []CommentData `json:"data"`
+	}
+
+	CommentData struct {
+		Id          string `json:"id"`
+		Message     string `json:"message"`
+		From        From   `json:"from"`
+		CreatedTime string `json:"created_time"`
+	}
+
+	From struct {
+		Name string `json:"name"`
+		Id   string `json:"id"`
+	}
+
 	DbPost struct {
 		PostId         string    `json:"post_id"`
 		FacebookPostId string    `json:"facebook_post_id"`
+		FacebookUserId string    `json:"facebook_user_id"`
+		Comments       Comment   `json:"comments"`
 		PostMessage    string    `json:"post_message"`
 		PostImages     [][]byte  `json:"post_images"`
 		ImagePaths     []string  `json:"image_paths"`

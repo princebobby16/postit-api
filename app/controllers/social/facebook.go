@@ -137,7 +137,7 @@ func HandleFacebookCode(w http.ResponseWriter, r *http.Request) {
 	logs.Logger.Info("query", stmt)
 	lId, err := db.Connection.Exec(stmt,
 		&appUUid,
-		"Facebook_App",
+		"facebook",
 		&appId,
 		&appSecret,
 		&appUrl,
@@ -237,12 +237,15 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 		pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
 		return
 	}
+
 	var dbP pkg.DbPost
 	var dbPosts []pkg.DbPost
+	var comment pkg.Comment
 	for rows.Next() {
 		err := rows.Scan(
 			&dbP.PostId,
 			&dbP.FacebookPostId,
+			&dbP.FacebookUserId,
 			&dbP.PostMessage,
 			pq.Array(&dbP.PostImages),
 			pq.Array(&dbP.ImagePaths),
@@ -260,6 +263,57 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// get accessToken from db
+		var accessToken string
+		query := fmt.Sprintf("SELECT user_access_token FROM %s.application_info WHERE user_id = $1", tenantNamespace)
+		err = db.Connection.QueryRow(query, dbP.FacebookUserId).Scan(&accessToken)
+		if err != nil {
+			pkg.SendErrorResponse(w, transactionId, "", err, http.StatusInternalServerError)
+			return
+		}
+		// prepare request to facebook for the comments
+		client := &http.Client{}
+		req, err := http.NewRequest(http.MethodGet, os.Getenv("FACEBOOK_COMMENTS_URL")+"/"+dbP.FacebookPostId+"/comments?access_token="+accessToken, nil)
+		if err != nil {
+			logs.Logger.Info(err)
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		// make the request
+		//req.URL.Query().Set("access_token", accessToken)
+		logs.Logger.Info(dbP)
+		logs.Logger.Info("fetching comments from facebook")
+		resp, err := client.Do(req)
+		if err != nil {
+			logs.Logger.Info(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		if resp.StatusCode != 200 {
+			logs.Logger.Info(resp.StatusCode)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			logs.Logger.Info(err)
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		logs.Logger.Info(string(body))
+
+		err = json.Unmarshal(body, &comment)
+		if err != nil {
+			logs.Logger.Info(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		logs.Logger.Info(comment)
+		logs.Logger.Info(resp.Status)
+
 		if dbP.ImagePaths == nil || len(dbP.ImagePaths) == 0 {
 			dbP.ImagePaths = []string{}
 		}
@@ -271,6 +325,7 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 		if dbP.HashTags == nil || len(dbP.HashTags) == 0 {
 			dbP.HashTags = []string{}
 		}
+		dbP.Comments = comment
 
 		dbPosts = append(dbPosts, dbP)
 	}
