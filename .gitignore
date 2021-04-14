@@ -1,3 +1,8 @@
 .env
-.idea
+.idea/
 go_build_gitlab_com_pbobby001_postit_api.exe
+/pkg/logs/*.log
+/pkg/logs/common.log
+/pkg/logs/error.log
+/pkg/logs/critical.log
+
