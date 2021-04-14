@@ -280,12 +280,6 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if resp.StatusCode != 200 {
-			logs.Logger.Info(resp.StatusCode)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			logs.Logger.Info(err)
@@ -293,6 +287,12 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		logs.Logger.Info(string(body))
+
+		if resp.StatusCode != 200 {
+			logs.Logger.Info(resp.StatusCode)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
 		err = json.Unmarshal(body, &comment)
 		if err != nil {

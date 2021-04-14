@@ -1,4 +1,4 @@
-1618408419364924400 [Info] -----BEGIN PRIVATE KEY-----
+1618413963636329500 [Info] -----BEGIN PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3MowHvErWc4Zcg+GDZXb5rg4TTwlknBqqR31IQXrkfPxTIi9
 6WjMeuUm7J8a5g1jnrSoG1VntAnbBPXMMPqGcAFdmN8uUXLG5fukoWY82+9qCQjZ
 4C020FEhsTqkhXaekvrrxDbFGuIr4fNWMzgB8m4oHSj/jdiHqJL00zVBPgMA/Jwn
@@ -26,24 +26,54 @@ RABTdJTiQ/B5KZeDyu5ssUQB/i375Mvk6VGgxpyp2VtlqgPWXH2e5xcPEt4hrvEC
 xWw/ZiFumMf7zf0znCKG4MrdOOcK75EEiZcB3uLG2dJ/M91ENM6ymw==
 -----END PRIVATE KEY-----
 
-1618408419450926900 [Info] Connected to Postgres DB successfully
-1618408419452928200 [Info] Server running on port5379
-1618408425725286600 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
-1618408425729287400 [Warn] check toke expiration time
-1618408425730288300 [Info] Token expired! getting a new one....
-1618408425749289100 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODQwOTYyNSwianRpIjoiZWU4M2VmZjAtNWEwMy00YjM5LTgzNDYtMTE2NDhkZTcxYjdlIiwiaWF0IjoxNjE4NDA4NDI1LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
-1618408425749289100 [Warn] About to get to validator
-1618408425749289100 [Info] Passed validator
-1618408425750288600 [Info] /fb/posts
-1618408425750288600 [Info] ===========================================
-1618408425750288600 [Info] Handling Fetch Facebook Posts ...
-1618408425752287200 [Info] ===========================================
-1618408425753289000 [Info] Headers => TraceId: 002c2142-e3cd-4cc4-90d8-9199cf68565a, TenantNamespace: postit
-1618408425903297900 [Info] {421d9390-93a3-4d7c-aeee-4af6f922d57c 106504911165786_243842050765404 243952730431775 {[]} Grow with Digital}
-1618408425903297900 [Info] fetching comments from facebook
-1618408426566335800 [Info] {"data":[{"created_time":"2021-04-14T12:44:30+0000","from":{"name":"Shiftr Gh","id":"106504911165786"},"message":"Hello Shiftr","id":"243842050765404_243860154096927"}],"paging":{"cursors":{"before":"MQZDZD","after":"MQZDZD"}}}
-1618408426567336700 [Info] {[{243842050765404_243860154096927 Hello Shiftr {Shiftr Gh 106504911165786} 2021-04-14T12:44:30+0000}]}
-1618408426567336700 [Info] 200 OK
-1618408426568335800 [Info] Grow with Digital
-1618408448756286600 [Warn] http: Server closed
-1618408449255298700 [Warn] shutting down
+1618413963995888600 [Info] Connected to Postgres DB successfully
+1618413963997888100 [Info] Server running on port5379
+1618413975381335000 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NjIyOWU3ZS0wZjc4LTQ4NjAtYTRmMy1hZjdhN2M5NWRlZjMiLCJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImlzcyI6IlBPU1RJVCIsInN1YiI6IlVzZXIgTG9naW4gQXV0aGVudGljYXRpb24iLCJleHAiOjE2MTY3NzcyNzgsImlhdCI6MTYxNjc3NjA3OH0.Sp-nZsvTWs5MimZup5LzW5OGzSibRC7kdm5m-z-mch7quWV6-T2c7OyTa_SQiukpd_kNf9WP2oEeYUoEFQaWyg
+1618413975694884800 [Warn] check toke expiration time
+1618413975696885200 [Info] Token expired! getting a new one....
+1618413975881326600 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODQxNTE3NSwianRpIjoiZjgyZDhmNWYtODM0Ny00OTcwLTk4N2MtYjBjOTMwMWZiNWJkIiwiaWF0IjoxNjE4NDEzOTc1LCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
+1618413975882333100 [Warn] About to get to validator
+1618413975882333100 [Info] Passed validator
+1618413975883332100 [Info] /posts
+1618413975892332800 [Info] ===========================================
+1618413975930333900 [Info] Handling create post ...
+1618413975931335800 [Info] ===========================================
+1618413976058780700 [Info] Headers => TraceId: %s, TenantNamespace: %s590bed4d-9863-440b-84e8-f32773b1697epostit
+1618413976060780700 [Info] 5daa3428-a67b-499b-aaa7-cbe4a9c349aa
+1618413976073798500 [Info] Request Object: {
+	"post_message": "Grow with Digital",
+	"hash_tags": ["GrowWithShiftr", "JoinTheMovement"],
+	"post_priority": false
+}
+1618413976095208000 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit
+1618413976096214500 [Warn] open C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit: The system cannot find the file specified.
+1618413976097214500 [Info] []
+1618413976097214500 [Info] HashTags: [#GrowWithShiftr #JoinTheMovement]
+1618413976100213900 [Info] Db Query: INSERT INTO postit.post (post_id, facebook_post_id, post_message, post_images, image_paths, hash_tags, post_fb_status, post_tw_status, post_li_status, post_priority, scheduled) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+1618413976192266600 [Info] Last Insert Id: 0
+1618414013672969900 [Info] eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxNzk3MjI5MywianRpIjoiYzgwNmY3NWQtNTg4OC00NzM4LThlOTktY2Q0ZjY2ZGQ2MDUyIiwiaWF0IjoxNjE3OTcxMDkzLCJpc3MiOiJQT1NUSVQiLCJzdWIiOiJVc2VyIExvZ2luIEF1dGhlbnRpY2F0aW9uIn0.ANO5z37lZaHX4N9K0Yb1USRvgkMFOdqYPoeraqFitZK258JYrBgDjk_9iDPex3fMM8THlafW_TOIRFW11O9vjQ
+1618414013716971400 [Warn] check toke expiration time
+1618414013720971700 [Info] Token expired! getting a new one....
+1618414013745973800 [Info] refresh-token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicG9zdGl0LWF1ZGllbmNlIiwicG9zdGl0Il0sImV4cCI6MTYxODQxNTIxMywianRpIjoiMjcwNmIwODgtOWUyYy00OGFkLTgxYTEtNDA0NmNmN2UxMDMyIiwiaWF0IjoxNjE4NDE0MDEzLCJpc3MiOiJQb3N0SXQiLCJzdWIiOiJVc2VyIHJlZnJlc2ggdG9rZW4ifQ.<signature>
+1618414013754974400 [Warn] About to get to validator
+1618414013755973500 [Info] Passed validator
+1618414013755973500 [Info] /posts
+1618414013756973900 [Info] ===========================================
+1618414013757973900 [Info] Handling Update Post ...
+1618414013757973900 [Info] ===========================================
+1618414013758973800 [Info] Headers => TraceId: %s, TenantNamespace: %sa70cd19d-6b07-4dd4-b1f2-97e20871549fpostit
+1618414013760974200 [Info] {
+      "post_message": "Wow with Digital",
+      "hash_tags": [
+        "#GrowWithShiftr"
+      ],
+      "created_on": "2021-04-11T22:32:48.029749+01:00",
+      "updated_on": "2021-04-11T22:32:48.029749+01:00"
+    }
+1618414013805674200 [Info] [#GrowWithShiftr]
+1618414013806681600 [Info] 5daa3428-a67b-499b-aaa7-cbe4a9c349aa
+1618414014686731100 [Info] length of images: 0, length of postImages: 0
+1618414014713744200 [Info] C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit
+1618414014714746100 [Warn] open C:\Users\Prince Bobby\Desktop\postit\postit-api\pkg\postit: The system cannot find the file specified.
+1618414014715744600 [Info] []
+1618414014716745500 [Info] UPDATE postit.post SET post_message = $1, hash_tags = $2, post_priority = $3, post_images = $4, image_paths = $5 WHERE post_id = $6
