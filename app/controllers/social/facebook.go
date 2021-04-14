@@ -262,12 +262,13 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 		}
 		// prepare request to facebook for the comments
 		client := &http.Client{}
-		req, err := http.NewRequest(http.MethodGet, os.Getenv("FACEBOOK_COMMENTS_URL")+"/"+dbP.FacebookPostId+"/comments?access_token="+accessToken, nil)
+		req, err := http.NewRequest(http.MethodGet, os.Getenv("FACEBOOK_COMMENTS_URL")+"/v10.0/"+dbP.FacebookPostId+"/comments?access_token="+accessToken, nil)
 		if err != nil {
 			logs.Logger.Info(err)
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+		logs.Logger.Info(req.URL.String())
 
 		// make the request
 		//req.URL.Query().Set("access_token", accessToken)
@@ -287,6 +288,7 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		logs.Logger.Info(string(body))
+		logs.Logger.Info(resp.Status)
 
 		if resp.StatusCode != 200 {
 			logs.Logger.Info(resp.StatusCode)
@@ -301,7 +303,6 @@ func FetchFacebookPosts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		logs.Logger.Info(comment)
-		logs.Logger.Info(resp.Status)
 
 		dbP.Comments = comment
 
