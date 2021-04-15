@@ -22,19 +22,19 @@ CREATE TABLE IF NOT EXISTS postit.post
 
 CREATE TABLE IF NOT EXISTS postit.schedule
 (
-    schedule_id       uuid UNIQUE              NOT NULL,
+    schedule_id       uuid UNIQUE                 NOT NULL,
     schedule_title    character varying(200),
-    post_to_feed      boolean                  NOT NULL,
-    schedule_from     timestamp with time zone NOT NULL,
-    schedule_to       timestamp with time zone NOT NULL,
-    post_ids          character varying(200)[] NOT NULL,
-    duration_per_post float                    NOT NULL,
-    facebook          character varying(200)[] NOT NULL,
-    twitter           character varying(200)[] NOT NULL,
-    linked_in         character varying(200)[] NOT NULL,
+    post_to_feed      boolean                     NOT NULL,
+    schedule_from     timestamp without time zone NOT NULL,
+    schedule_to       timestamp without time zone NOT NULL,
+    post_ids          character varying(200)[]    NOT NULL,
+    duration_per_post float                       NOT NULL,
+    facebook          character varying(200)[]    NOT NULL,
+    twitter           character varying(200)[]    NOT NULL,
+    linked_in         character varying(200)[]    NOT NULL,
     is_due            boolean,
-    created_at        timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at        timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at        timestamp with time zone    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at        timestamp with time zone    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (schedule_id)
 );
 
