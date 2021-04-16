@@ -79,6 +79,9 @@ func AllAccounts(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+	logs.Logger.Info("Facebook", fb)
+	logs.Logger.Info("Twitter", tw)
+	logs.Logger.Info("LinkedIn", li)
 
 	_ = json.NewEncoder(w).Encode(struct {
 		Data pkg.PostitUserData `json:"data"`
