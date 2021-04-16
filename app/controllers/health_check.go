@@ -20,7 +20,7 @@ func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	health := &HealthCheck{
-		ServerName: "Post It",
+		ServerName: "Post It API",
 		Author:     "Prince Bobby",
 		Version:    "1.0.0",
 		Health:     "Alive",
