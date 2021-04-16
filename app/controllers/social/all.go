@@ -58,6 +58,10 @@ func AllAccounts(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		if appInfo.UserId == "" {
+			continue
+		}
+
 		if appInfo.ApplicationName == "facebook" {
 			fb = append(fb, pkg.FacebookPostitUserData{
 				Username:    appInfo.UserName,
