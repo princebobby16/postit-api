@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS postit.application_info
 (
     application_uuid   uuid UNIQUE                   NOT NULL,
     application_name   character varying(200)        NOT NULL,
-    application_id     character varying(200) UNIQUE NOT NULL,
+    application_id     character varying(200)  NOT NULL,
     application_secret character varying(200)        NOT NULL,
     application_url    character varying(200)        NOT NULL,
     user_access_token  text                          NOT NULL,
