@@ -7,7 +7,6 @@ import (
 	"gitlab.com/pbobby001/postit-api/app/controllers/mediaupload"
 	"gitlab.com/pbobby001/postit-api/app/controllers/posts"
 	"gitlab.com/pbobby001/postit-api/app/controllers/social"
-	"gitlab.com/pbobby001/postit-api/app/controllers/websockets"
 	"net/http"
 )
 
@@ -140,19 +139,6 @@ func InitRoutes() *mux.Router {
 			Method:  http.MethodGet,
 			Handler: social.FetchFacebookPosts,
 		},
-
-		// websockets
-		Route{
-			Path:    "/pws/schedule-status",
-			Method:  http.MethodGet,
-			Handler: websockets.ScheduleStatus,
-		},
-		//Route{
-		//	Name: "Count Post",
-		//	Path:    "/count/post",
-		//	Method:  http.MethodGet,
-		//	Handler: posts.CountPosts,
-		//},
 		Route{
 			Name:    "Count Schedule",
 			Path:    "/count/data",
