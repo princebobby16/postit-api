@@ -9,6 +9,7 @@ import (
 	"gitlab.com/pbobby001/postit-api/db"
 	"gitlab.com/pbobby001/postit-api/pkg/logs"
 	"golang.org/x/net/context"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
@@ -64,6 +65,22 @@ func main() {
 
 	r.Use(middlewares.JSONMiddleware)
 	r.Use(middlewares.JWTMiddleware)
+
+	go func() {
+		for {
+			ticker := time.NewTicker(30 * time.Second)
+			for t := range ticker.C {
+				resp, err := http.Get(os.Getenv("PING_URL"))
+				if err != nil {
+					_ = logs.Logger.Error("unable to ping")
+					continue
+				}
+				body, _ := ioutil.ReadAll(resp.Body)
+				logs.Logger.Info(string(body))
+				logs.Logger.Info("Pinging " + os.Getenv("PING_URL")+ t.String())
+			}
+		}
+	}()
 
 	defer db.Disconnect()
 	// Run our server in a goroutine so that it doesn't block.
